@@ -20,44 +20,44 @@ type CardItem = {
 };
 const cards: CardItem[] = [
   // Image Generation
-  { src: '/Landingpage/features/text to image.png', title: 'Text to Image', category: 'Image Generation', col: 1, row: 3, fit:'cover' },
-  { src: '/Landingpage/features/image to image.png', title: 'Image to Image', category: 'Image Generation', col: 1, row: 2, fit:'cover' },
-  { src: '/Landingpage/features/sticker.png', title: 'Sticker Generation', category: 'Image Generation', col: 2, row: 2, fit:'cover' },
-  { src: '/Landingpage/features/character gen.png', title: 'Character Generation', category: 'Image Generation', col: 2, row: 3, fit:'cover' },
-  { src: '/Landingpage/features/chatracter swap.png', title: 'Character Swap', category: 'Image Generation', col: 1, row: 3 },
-  { src: '/Landingpage/features/in paint.png', title: 'Inpaint', category: 'Image Generation', col: 2, row: 2 },
-  { src: '/Landingpage/features/live portrtait.png', title: 'Live Portrait', category: 'Image Generation', col: 1, row: 2, fit:'cover' },
-  { src: '/Landingpage/features/facial expe.png', title: 'Facial Expression', category: 'Image Generation', col: 2, row: 3, fit:'cover' },
-  { src: '/Landingpage/features/image upscale.png', title: 'Image Upscale', category: 'Image Generation', col: 1, row: 2, fit:'cover' },
-  { src: '/Landingpage/features/background remo.png', title: 'Remove Background', category: 'Image Generation', col: 1, row: 2, fit:'cover' },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Ffeatures%2Ftext%20to%20image.png?alt=media&token=c4d520f4-9634-4337-a12d-f1c7be8c98dc', title: 'Text to Image', category: 'Image Generation', col: 1, row: 3, fit:'cover' },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Ffeatures%2Fimage%20to%20image.png?alt=media&token=0e50eeb8-768a-4b87-bb0f-38b9e05aad0b', title: 'Image to Image', category: 'Image Generation', col: 1, row: 2, fit:'cover' },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Ffeatures%2Fsticker.png?alt=media&token=8486b4d6-5f0e-4ffc-a7bb-f5883c5835dd', title: 'Sticker Generation', category: 'Image Generation', col: 2, row: 2, fit:'cover' },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Ffeatures%2Fcharacter%20gen.png?alt=media&token=22643ce1-885a-4625-8655-d608e1fcd228', title: 'Character Generation', category: 'Image Generation', col: 2, row: 3, fit:'cover' },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Ffeatures%2Fchatracter%20swap.png?alt=media&token=18a0cdb6-09a5-4ed7-a2d4-4d49fcb844fa', title: 'Character Swap', category: 'Image Generation', col: 1, row: 3 },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Ffeatures%2Fin%20paint.png?alt=media&token=97d8fd17-252a-4edf-9945-8dec84615838', title: 'Inpaint', category: 'Image Generation', col: 2, row: 2 },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Ffeatures%2Flive%20portrtait.png?alt=media&token=d2f96342-4466-4309-bfcc-e55f6e438d82', title: 'Live Portrait', category: 'Image Generation', col: 1, row: 2, fit:'cover' },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Ffeatures%2Ffacial%20expe.png?alt=media&token=9f512ef5-ba55-4d51-aeb5-b66ee2e9728c', title: 'Facial Expression', category: 'Image Generation', col: 2, row: 3, fit:'cover' },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Ffeatures%2Fimage%20upscale.png?alt=media&token=6f225b2d-5f49-419e-a2f0-493dd27af9ca', title: 'Image Upscale', category: 'Image Generation', col: 1, row: 2, fit:'cover' },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Ffeatures%2Fbackground%20remo.png?alt=media&token=da167d22-ca8e-4c90-a990-2fefb1394edb', title: 'Remove Background', category: 'Image Generation', col: 1, row: 2, fit:'cover' },
 
   // Branding Kit
-  { src: '/Landingpage/features/logo generation.png', title: 'Logo Generation', category: 'Branding Kit', col: 2, row: 2, fit:'cover' },
-  { src: '/Landingpage/features/prouct display.png', title: 'Product Display', category: 'Branding Kit', col: 2, row: 3, fit:'cover' },
-  { src: '/Landingpage/features/mockup.png', title: 'Mockup Generation', category: 'Branding Kit', col: 2, row: 3, fit:'cover' },
-  { src: '/Landingpage/features/Product with Models.png', title: 'Product with Models', category: 'Branding Kit', col: 2, row: 5, fit:'cover' },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Ffeatures%2Flogo%20generation.png?alt=media&token=b502d6b3-0522-487d-84b2-748bf2e8ced1', title: 'Logo Generation', category: 'Branding Kit', col: 2, row: 2, fit:'cover' },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Ffeatures%2Fprouct%20display.png?alt=media&token=af61604f-415a-4fff-bcd5-ccf6dab64d2c', title: 'Product Display', category: 'Branding Kit', col: 2, row: 3, fit:'cover' },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Ffeatures%2Fmockup.png?alt=media&token=308c6101-51e6-4f23-be23-a3025bd9b545', title: 'Mockup Generation', category: 'Branding Kit', col: 2, row: 3, fit:'cover' },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Ffeatures%2FProduct%20with%20Models.png?alt=media&token=8c34d7fe-5cc1-4df8-be18-01acd0238c9f', title: 'Product with Models', category: 'Branding Kit', col: 2, row: 5, fit:'cover' },
 
   // Video Generation
-  { src: '/Landingpage/features/text to video.png', title: 'Text to Video', category: 'Video Generation', col: 2, row: 2, fit:'cover' },
-  { src: '/Landingpage/features/image to video.png', title: 'Image to Video', category: 'Video Generation', col: 2, row: 2, fit:'cover' },
-  { src: '/Landingpage/features/face swap.png', title: 'Face Swap', category: 'Video Generation', col: 1, row: 2, fit:'cover' },
-  { src: '/Landingpage/features/charcater swap.png', title: 'Character Swap', category: 'Video Generation', col: 2, row: 2, fit:'cover' },
-  { src: '/Landingpage/features/vfx.png', title: 'VFX', category: 'Video Generation', col: 2, row: 2, fit:'cover' },
-  { src: '/Landingpage/features/video enhancement.png', title: 'Video Enhancement', category: 'Video Generation', col: 1, row: 2, fit:'cover' },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Ffeatures%2Ftext%20to%20video.png?alt=media&token=c6f16395-285d-4c42-89bd-7dd745fab145', title: 'Text to Video', category: 'Video Generation', col: 2, row: 2, fit:'cover' },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Ffeatures%2Fimage%20to%20video.png?alt=media&token=85fbb1f5-eafc-455f-ad2e-c93e278ed356', title: 'Image to Video', category: 'Video Generation', col: 2, row: 2, fit:'cover' },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Ffeatures%2Fface%20swap.png?alt=media&token=6c560f62-7921-477f-a579-f500aad3f972', title: 'Face Swap', category: 'Video Generation', col: 1, row: 2, fit:'cover' },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Ffeatures%2Fcharcater%20swap.png?alt=media&token=77ad1588-b999-4cd3-8aca-3caf0e74bf48', title: 'Character Swap', category: 'Video Generation', col: 2, row: 2, fit:'cover' },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Ffeatures%2Fvfx.png?alt=media&token=d41d05a7-eda1-4ce2-a776-389cace09742', title: 'VFX', category: 'Video Generation', col: 2, row: 2, fit:'cover' },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Ffeatures%2Fvideo%20enhancement.png?alt=media&token=bc376eed-5163-44f2-83b7-e853f9d9cea9', title: 'Video Enhancement', category: 'Video Generation', col: 1, row: 2, fit:'cover' },
 
   // Audio Generation
-  { src: '/Landingpage/features/text to music.png', title: 'Text to Music', category: 'Audio Generation', col: 2, row: 4, fit:'cover' },
-  { src: '/Landingpage/features/audio to music.png', title: 'Audio to Music', category: 'Audio Generation', col: 2, row: 3, fit:'cover' },
-  { src: '/Landingpage/features/lyrics to music.png', title: 'Lyrics to Music', category: 'Audio Generation', col: 2, row: 4, fit:'cover' },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Ffeatures%2Ftext%20to%20music.png?alt=media&token=518a37b2-38ee-4e22-8b98-09e20db0a064', title: 'Text to Music', category: 'Audio Generation', col: 2, row: 4, fit:'cover' },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Ffeatures%2Faudio%20to%20music.png?alt=media&token=fa6b39e2-2efb-4c79-b17e-cf828232a92b', title: 'Audio to Music', category: 'Audio Generation', col: 2, row: 3, fit:'cover' },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Ffeatures%2Flyrics%20to%20music.png?alt=media&token=c8933ad7-5ee5-4383-8b4b-a8e8c7ca1bca', title: 'Lyrics to Music', category: 'Audio Generation', col: 2, row: 4, fit:'cover' },
 
   // Filming Tools
-  { src: '/Landingpage/features/storyboard.png', title: 'Storyboard', category: 'Filming Tools', col: 2, row: 2, fit:'cover' },
-  { src: '/Landingpage/features/film generation.png', title: 'Film Generation', category: 'Filming Tools', col: 2, row: 3, fit:'cover' },
-  { src: '/Landingpage/features/comic generation.png', title: 'Comic Generation', category: 'Filming Tools', col: 2, row: 2, fit:'cover' },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Ffeatures%2Fstoryboard.png?alt=media&token=470a35e1-cb15-4772-b57c-48c5b36746a2', title: 'Storyboard', category: 'Filming Tools', col: 2, row: 2, fit:'cover' },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Ffeatures%2Ffilm%20generation.png?alt=media&token=fc605be6-7659-4da1-8221-89ad63f6f47f', title: 'Film Generation', category: 'Filming Tools', col: 2, row: 3, fit:'cover' },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Ffeatures%2Fcomic%20generation.png?alt=media&token=a11dd9e5-c0de-4f13-954c-7367eadb2ea1', title: 'Comic Generation', category: 'Filming Tools', col: 2, row: 2, fit:'cover' },
 
   // 3D Generation
-  { src: '/Landingpage/features/textto3d.png', title: 'Text to 3D', category: '3D Generation', col: 2, row: 2 },
-  { src: '/Landingpage/features/text to 3d.png', title: 'Image to 3D', category: '3D Generation', col: 2, row: 2, fit:'cover' },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Ffeatures%2Ftextto3d.png?alt=media&token=0d574ba4-b404-4a96-b692-88441f1cdcd9', title: 'Text to 3D', category: '3D Generation', col: 2, row: 2 },
+  { src: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Ffeatures%2Ftext%20to%203d.png?alt=media&token=1247f7f9-9d3d-45aa-9626-03e9e69cbf7f', title: 'Image to 3D', category: '3D Generation', col: 2, row: 2, fit:'cover' },
 ];
 
 interface AiToolsGridProps {

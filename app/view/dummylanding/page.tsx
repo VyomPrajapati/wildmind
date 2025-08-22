@@ -45,44 +45,21 @@ const Page = () => {
   const [canScrollWorkflowLeft, setCanScrollWorkflowLeft] = React.useState(false)
   const [canScrollWorkflowRight, setCanScrollWorkflowRight] = React.useState(true)
   
-  // Memoize carousel items to prevent unnecessary re-renders
-  const carouselItems = React.useMemo(() => 
-    carouselCards.map((card, index) => (
-      <Card
-        key={card.title}
-        card={{
-          src: card.src,
-          title: card.title,
-          description: card.description,
-        }}
-        index={index}
-        layout
-      />
-    )), [carouselCards]
-  )
+  // Carousel items
+  const carouselItems = carouselCards.map((card, index) => (
+    <Card
+      key={card.title}
+      card={{
+        src: card.src,
+        title: card.title,
+        description: card.description,
+      }}
+      index={index}
+      layout
+    />
+  ))
   
   // Memoized workflow scroll functions to prevent recreation on every render
-  const smoothScrollTo = React.useCallback((container: HTMLDivElement, targetLeft: number, duration = 600) => {
-    const startLeft = container.scrollLeft;
-    const maxLeft = container.scrollWidth - container.clientWidth;
-    const clampedTarget = Math.max(0, Math.min(targetLeft, maxLeft));
-    const change = clampedTarget - startLeft;
-    const startTime = performance.now();
-    const easeOutCubic = (t: number) => 1 - Math.pow(1 - t, 3);
-
-    function step(now: number) {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      container.scrollLeft = startLeft + change * easeOutCubic(progress);
-      if (progress < 1) {
-        requestAnimationFrame(step);
-      } else {
-        checkWorkflowScrollability();
-      }
-    }
-    requestAnimationFrame(step);
-  }, []);
-
   const checkWorkflowScrollability = React.useCallback(() => {
     if (workflowScrollRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = workflowScrollRef.current;
@@ -91,6 +68,42 @@ const Page = () => {
     }
   }, []);
 
+  const smoothScrollTo = React.useCallback((container: HTMLDivElement, targetLeft: number, duration = 600) => {
+    const startLeft = container.scrollLeft;
+    const maxLeft = container.scrollWidth - container.clientWidth;
+    const clampedTarget = Math.max(0, Math.min(targetLeft, maxLeft));
+    const change = clampedTarget - startLeft;
+    
+    // Use native smooth scrolling for better performance
+    if ('scrollBehavior' in container.style) {
+      container.scrollTo({
+        left: clampedTarget,
+        behavior: 'smooth'
+      });
+      
+      // Check scrollability after animation completes
+      setTimeout(() => {
+        checkWorkflowScrollability();
+      }, duration);
+    } else {
+      // Fallback for browsers that don't support smooth scrolling
+      const startTime = performance.now();
+      const easeOutQuart = (t: number) => 1 - Math.pow(1 - t, 4);
+
+      function step(now: number) {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        container.scrollLeft = startLeft + change * easeOutQuart(progress);
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        } else {
+          checkWorkflowScrollability();
+        }
+      }
+      requestAnimationFrame(step);
+    }
+  }, [checkWorkflowScrollability]);
+
   const scrollWorkflowLeft = React.useCallback(() => {
     if (workflowScrollRef.current) {
       const container = workflowScrollRef.current;
@@ -98,7 +111,7 @@ const Page = () => {
       const gap = 24; // gap-6
       const delta = cardWidth + gap;
       const target = container.scrollLeft - delta;
-      smoothScrollTo(container, target, 700);
+      smoothScrollTo(container, target, 500); // Reduced duration for snappier feel
     }
   }, [smoothScrollTo]);
 
@@ -109,7 +122,7 @@ const Page = () => {
       const gap = 24; // gap-6
       const delta = cardWidth + gap;
       const target = container.scrollLeft + delta;
-      smoothScrollTo(container, target, 700);
+      smoothScrollTo(container, target, 500); // Reduced duration for snappier feel
     }
   }, [smoothScrollTo]);
 
@@ -307,32 +320,30 @@ const Page = () => {
           </p>
         </div>
         <div className="relative w-full">
-          <div className="flex gap-6 overflow-x-auto px-4 py-4 [scrollbar-width:none] mb:gap-4 mb:px-3 mb:py-3" style={{ WebkitOverflowScrolling: 'touch' }} ref={workflowScrollRef} onScroll={checkWorkflowScrollability}>
-            {React.useMemo(() => 
-              workflowCards.map((item, idx) => (
-                <CardContainer key={item.title + idx} className="inter-var" containerClassName="py-6">
-                  <CardBody className="bg-[#0f181f] relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-[24rem] h-auto rounded-xl p-6 border mb:w-[18rem] mb:p-4">
-                    <CardItem translateZ="50" className="text-xl font-bold text-white dark:text-white mb:text-lg">
-                      {item.title}
+          <div className="flex gap-6 overflow-x-auto px-4 py-4 [scrollbar-width:none] mb:gap-4 mb:px-3 mb:py-3 scroll-smooth" style={{ WebkitOverflowScrolling: 'touch', scrollBehavior: 'smooth' }} ref={workflowScrollRef} onScroll={checkWorkflowScrollability}>
+            {workflowCards.map((item, idx) => (
+              <CardContainer key={item.title + idx} className="inter-var" containerClassName="py-6">
+                <CardBody className="bg-[#0f181f] relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-[24rem] h-auto rounded-xl p-6 border mb:w-[18rem] mb:p-4">
+                  <CardItem translateZ="50" className="text-xl font-bold text-white dark:text-white mb:text-lg">
+                    {item.title}
+                  </CardItem>
+                  <CardItem translateZ="100" rotateX={20} rotateZ={-10} className="w-full mt-4 mb:mt-3">
+                    <Image
+                      src={item.src}
+                      height={1000}
+                      width={1000}
+                      className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl mb:h-44"
+                      alt="thumbnail"
+                    />
+                  </CardItem>
+                  <div className="flex justify-end items-center mt-16 mb:mt-10">
+                    <CardItem translateZ="20" translateX={40} as="button" className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold mb:px-3 mb:text-[10px]">
+                      Explore
                     </CardItem>
-                    <CardItem translateZ="100" rotateX={20} rotateZ={-10} className="w-full mt-4 mb:mt-3">
-                      <Image
-                        src={item.src}
-                        height={1000}
-                        width={1000}
-                        className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl mb:h-44"
-                        alt="thumbnail"
-                      />
-                    </CardItem>
-                    <div className="flex justify-end items-center mt-16 mb:mt-10">
-                      <CardItem translateZ="20" translateX={40} as="button" className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold mb:px-3 mb:text-[10px]">
-                        Explore
-                      </CardItem>
-                    </div>
-                  </CardBody>
-                </CardContainer>
-              )), [workflowCards]
-            )}
+                  </div>
+                </CardBody>
+              </CardContainer>
+            ))}
           </div>
           {/* Workflow Navigation Arrows */}
           <div className="flex justify-end gap-2 mr-10 mb:mr-4">
@@ -432,8 +443,8 @@ const Page = () => {
             
             <SpotlightCard className="bg-white/10 border-neutral-800">
               <div className="relative">
-                <h3 className="text-neutral-200 font-semibold text-lg mb-3">Flexible Token System with On-Demand Top-Ups</h3>
-                <p className="text-neutral-400 text-sm leading-relaxed text-justify">Run out of credits? Buy exactly what you need, whether it&apos;s 1,000 or 10,000 tokens. No rigid tiers, no waste, just full control.</p>
+                <h3 className="text-neutral-200 font-semibold text-lg mb-3">Flexible Credit System with On-Demand Top-Ups</h3>
+                <p className="text-neutral-400 text-sm leading-relaxed text-justify">Run out of credits? Buy exactly what you need, whether it&apos;s 1,000 or 10,000 credits. No rigid tiers, no waste, just full control.</p>
               </div>
             </SpotlightCard>
             
@@ -472,15 +483,17 @@ const Page = () => {
                 Get started with 2,100 free credits and access to our full creative suite. No cost, no commitment, just pure AI power from day one. Generate 100+ Images monthly with the free plan
                 </p>
               </div>
-              <Image
-                src="/Landingpage/ArtGallery/img1.png"
-                width={500}
-                height={500}
-                alt="WildmindAI demo image"
-                className="absolute -right-4 lg:-right-[40%] grayscale filter -bottom-10 object-contain rounded-2xl mb:static mb:mt-6 mb:w-[70%] mb:max-w-[280px] mb:mx-auto mobile:w-[75%]"
-              />
+              <div className="absolute -right-16 md:-right-[40%] lg:-right-[35%] -bottom-20 mb:static mb-10 mb:mt-6 mb:w-[90%] mb:max-w-[320px] mb:mx-auto mobile:w-[85%]">
+                <Image
+                  src="https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fpricing%2Ffree%20plan.jpg?alt=media&token=455cc4fb-9efc-4082-a27d-540b45430896"
+                  width={500}
+                  height={500}
+                  alt="WildmindAI demo image"
+                  className="grayscale filter object-contain rounded-2xl scale-90"
+                />
+              </div>
             </WobbleCard>
-            <WobbleCard containerClassName="col-span-1 min-h-[300px] mb:min-h-[220px]">
+            <WobbleCard containerClassName="col-span-1 min-h-[300px] mb:min-h-[220px] bg-[#288F1A]">
               <h2 className="max-w-80  text-left text-balance text-base md:text-xl lg:text-4xl font-semibold tracking-[-0.015em] text-white font-poppins">
                 Student Discount
               </h2>
@@ -488,21 +501,27 @@ const Page = () => {
               Students save 33% on all plans — verified student ID required. Unlock pro-level AI tools at a student-friendly price.
               </p>
             </WobbleCard>
-            <WobbleCard containerClassName="col-span-1 lg:col-span-3 bg-blue-900 min-h-[500px] lg:min-h-[600px] xl:min-h-[300px] mb:min-h-[360px] mobile:min-h-[420px]">
+            <WobbleCard containerClassName="col-span-1 lg:col-span-3 bg-[#3F2185] min-h-[500px] lg:min-h-[600px] xl:min-h-[300px] mb:min-h-[360px] mobile:min-h-[420px]">
               <div className="max-w-sm">
                 <h2 className="max-w-sm md:max-w-lg text-left text-balance text-base md:text-xl lg:text-4xl font-semibold tracking-[-0.015em] text-white font-poppins">
                   Explore All Plans
                 </h2>
-                <p className="mt-4 max-w-[26rem] text-left  text-base/6 text-neutral-200 text-justify mr-2 font-medium">
+                <p className="mt-4 max-w-[26rem] text-left  text-base/6 text-neutral-200 text-justify mr-2 font-medium ">
                 From hobbyist to enterprise, our plans <br/>scale with your creativity. Get more<br/>credits, more power, more freedom — <br/>see what fits you best
                 </p>
               </div>
+              
+              {/* Pricing Plans Button - Bottom Left */}
+              <button className="absolute font-poppins text-sm bottom-6 left-10 bg-white text-[#3F2185] font-medium px-4 py-2 rounded-full hover:bg-gray-100 transition-all duration-200 shadow-lg">
+                Pricing Plans
+              </button>
+              
               <Image
-                src="/Landingpage/features/image to image.png"
+                src="https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fpricing%2Fexplore_plans.jpg?alt=media&token=1c4ba5d2-b254-48ef-80eb-9c1f8597ce57"
                 width={500}
                 height={500}
                 alt="WildmindAI demo image"
-                className="absolute -right-10 md:-right-[40%] lg:-right-[20%] -bottom-10 object-contain rounded-2xl mb:static mb:mt-6 mb:w-[80%] mb:max-w-[320px] mb:mx-auto mobile:w-[85%]"
+                className="grayscale filter absolute -right-10 md:-right-[40%] lg:-right-[20%] -bottom-10 object-contain rounded-2xl mb:static mb:mt-6 mb:w-[80%] mb:max-w-[320px] mb:mx-auto mobile:w-[85%]"
               />
             </WobbleCard>
           </div>
@@ -559,15 +578,15 @@ const Page = () => {
                     scrollEase={0.02}
                     imageGap={0.8}
                     items={[
-                      { image: '/Landingpage/ArtGallery/img1.png', text: '' },
-                      { image: '/Landingpage/ArtGallery/img2.png', text: '' },
-                      { image: '/Landingpage/ArtGallery/img3.png', text: '' },
-                      { image: '/Landingpage/ArtGallery/ex1.png', text: '' },
-                      { image: '/Landingpage/ArtGallery/ex2.png', text: '' },
-                      { image: '/Landingpage/ArtGallery/ex3.png', text: '' },
-                      { image: '/Landingpage/ArtGallery/ex4.png', text: '' },
-                      { image: '/Landingpage/ArtGallery/ex5.png', text: '' },
-                      { image: '/Landingpage/ArtGallery/ex6.png', text: '' },
+                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fimg1.png?alt=media&token=636b6993-8838-417a-b40b-9a109675a848', text: '' },
+                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fimg2.png?alt=media&token=507a37f0-ef55-4867-ab1f-79b92cb2d2d5', text: '' },
+                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fimg3.png?alt=media&token=01bc4c52-e552-4a93-8f6c-8e62fdf11930', text: '' },
+                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex1.png?alt=media&token=def5ff0e-f95d-4622-9987-38b92b4f2982', text: '' },
+                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex2.png?alt=media&token=ff63ea0e-6335-4b41-87cf-738636039ecb', text: '' },
+                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex3.png?alt=media&token=f198a71f-2319-4b79-9dcd-d7355161032a', text: '' },
+                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex4.png?alt=media&token=8c83af98-29a4-44f7-8135-da8aed0ec78d', text: '' },
+                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex5.png?alt=media&token=4fdb2267-b1f2-4a80-b900-d6631c08378c', text: '' },
+                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex6.png?alt=media&token=9ffa68a0-a392-4ced-a154-761a8046df86', text: '' },
                     ]}
                   />
                 </React.Suspense>
@@ -585,15 +604,15 @@ const Page = () => {
                     autoScrollSpeed={-0.05}
                     imageGap={0.8}
                     items={[
-                      { image: '/Landingpage/ArtGallery/ex7.png', text: '' },
-                      { image: '/Landingpage/ArtGallery/ex8.png', text: '' },
-                      { image: '/Landingpage/ArtGallery/ex9.png', text: '' },
-                      { image: '/Landingpage/ArtGallery/ex10.png', text: '' },
-                      { image: '/Landingpage/ArtGallery/ex11.png', text: '' },
-                      { image: '/Landingpage/ArtGallery/ex12.png', text: '' },
-                      { image: '/Landingpage/ArtGallery/ex13.png', text: '' },
-                      { image: '/Landingpage/ArtGallery/ex14.png', text: '' },
-                      { image: '/Landingpage/ArtGallery/ex15.png', text: '' },
+                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex7.png?alt=media&token=bc1a7a8f-ebe0-4fd6-9a75-3d0f07414e27', text: '' },
+                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex8.png?alt=media&token=68dad024-f582-4e6a-9b8a-92f70188252f', text: '' },
+                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex9.png?alt=media&token=fd980978-cbb2-4039-8b02-307d028635d5', text: '' },
+                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex10.png?alt=media&token=8cd9bec9-ad65-4807-8189-e60dcc4eb441', text: '' },
+                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex11.png?alt=media&token=85a8bb76-f450-4db8-9df3-6f4b4eb75166', text: '' },
+                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex12.png?alt=media&token=65c055c1-d812-40c5-b85e-7e50103f6672', text: '' },
+                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex13.png?alt=media&token=d8392b12-de19-471b-8902-d1a8e72d3b8f', text: '' },
+                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex14.png?alt=media&token=230af79c-da11-4eec-b143-b444aaa6c266', text: '' },
+                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex15.png?alt=media&token=64e4d18e-3bb0-471d-839b-656ce06ab0c0', text: '' },
                     ]}
                   />
                 </React.Suspense>

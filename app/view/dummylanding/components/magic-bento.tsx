@@ -710,23 +710,25 @@ const MagicBento: React.FC<BentoProps> = ({
     return () => {
       observer.disconnect();
       // best-effort cleanup for attached cards still in DOM
-      attachedCardsRef.current.forEach((el) => {
-        const cleanup = cleanupMapRef.current.get(el);
+      const currentCleanupMap = cleanupMapRef.current;
+      const currentAttachedCards = attachedCardsRef.current;
+      currentAttachedCards.forEach((el) => {
+        const cleanup = currentCleanupMap.get(el);
         if (cleanup) cleanup();
       });
-      attachedCardsRef.current.clear();
+      currentAttachedCards.clear();
     };
   }, [
     children,
-    shouldDisableAnimations,
     enableTilt,
     enableMagnetism,
-    clickEffect,
     glowColor,
     enableStars,
     particleCount,
     enableBorderGlow,
     spotlightRadius,
+    clickEffect,
+    shouldDisableAnimations,
   ]);
 
   return (

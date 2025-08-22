@@ -133,7 +133,7 @@ const NewsletterSignup: React.FC<NewsletterSignupProps> = ({ onSubmit }) => {
                 Updates
               </div>
               <Image
-                src="/Landingpage/animated-tabs/updates.png"
+                src="https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fsubscribe%2Fupdates.png?alt=media&token=1621cc22-2e80-4a0e-8975-d738310a5471"
                 alt="Updates"
                 width={320}
                 height={150}
@@ -146,7 +146,7 @@ const NewsletterSignup: React.FC<NewsletterSignupProps> = ({ onSubmit }) => {
                 Promotional Deals
               </div>
               <Image
-                src="/Landingpage/animated-tabs/promo.png"
+                src="https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fsubscribe%2Fpromo.png?alt=media&token=8497d01d-85c4-48ca-8c30-27da9e1d4fbd"
                 alt="Promotions"
                 width={320}
                 height={150}
@@ -159,7 +159,7 @@ const NewsletterSignup: React.FC<NewsletterSignupProps> = ({ onSubmit }) => {
                 Newsletter
               </div>
               <Image
-                src="/Landingpage/animated-tabs/neswsl.png"
+                src="https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fsubscribe%2Fneswsl.png?alt=media&token=57d0ddeb-6c33-487a-a69e-9eb4c3ab00bf"
                 alt="Newsletter"
                 width={320}
                 height={150}

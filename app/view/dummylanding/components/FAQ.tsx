@@ -21,9 +21,9 @@ const defaultFaqs: FaqItem[] = [
       'Wild Mind AI is an all-in-one multimodal AI platform that unifies more than 20 generative tools for creating content across text, images, video, audio, and branding. A multimodal platform integrates diverse data types so it can understand richer context than single‑modality systems; for example, it can generate a video from a text description and an image, producing more accurate, context‑aware, and creative outputs by leveraging the synergy between different inputs.',
   },
   {
-    question: "How does Wild Mind AI's token-based pricing work, and is it affordable?",
+    question: "How does Wild Mind AI's credit-based pricing work, and is it affordable?",
     answer:
-      'Wild Mind AI uses a flexible, consumption‑based token model. You only pay for the extra Tokens you need for the services you actually use, with transparent billing and no heavy markups on underlying model costs compared to typical competitors. This eliminates budget anxiety and lets you scale usage efficiently for each project.',
+      'Wild Mind AI uses a flexible, consumption‑based credit model. You only pay for the extra credits you need for the services you actually use, with transparent billing and no heavy markups on underlying model costs compared to typical competitors. This eliminates budget anxiety and lets you scale usage efficiently for each project.',
   },
   {
     question: 'What types of generative tools are included in the platform?',

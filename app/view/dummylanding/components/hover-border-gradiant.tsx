@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 import { motion } from "motion/react";
 import { cn } from "../../../lib/utils";
@@ -33,14 +33,14 @@ export function HoverBorderGradient({
 >) {
   const [direction, setDirection] = useState<Direction>("TOP");
 
-  const rotateDirection = (currentDirection: Direction): Direction => {
+  const rotateDirection = useCallback((currentDirection: Direction): Direction => {
     const directions: Direction[] = ["TOP", "LEFT", "BOTTOM", "RIGHT"];
     const currentIndex = directions.indexOf(currentDirection);
     const nextIndex = clockwise
       ? (currentIndex - 1 + directions.length) % directions.length
       : (currentIndex + 1) % directions.length;
     return directions[nextIndex];
-  };
+  }, [clockwise]);
 
   const movingMap: Record<Direction, string> = React.useMemo(() => ({
     TOP: `radial-gradient(20.7% 50% at 50% 0%, ${borderColor} 0%, transparent 100%)`,
