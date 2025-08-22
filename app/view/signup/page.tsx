@@ -20,7 +20,7 @@ export default function SignUp() {
       <div className="flex-1 h-screen relative bg-[#1E1E1E]">
         <div className="absolute inset-0 rounded-tl-[50px] rounded-bl-[50px] overflow-hidden">
           <Image 
-            src="/Landingpage/heroparallax/12.png" 
+            src="https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fsignup%2F3.png?alt=media&token=e67afc08-10e0-4710-b251-d9031ef14026" 
             alt="Stylized 3D Character" 
             fill 
             className="object-cover object-center object-[center_25%] scale-110" 
