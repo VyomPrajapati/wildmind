@@ -336,7 +336,7 @@ export default function SignInForm() {
         <div className="w-full max-w-md space-y-6  ">
           {/* Welcome Section - Only show when not on OTP screen, username screen, or login screen */}
           {!otpSent && !showUsernameForm && !showLoginForm && (
-            <div className="text-start space-y-2">
+            <div className="text-start space-y-2 ml-2">
               <h1 className="text-3xl font-medium text-white">Welcome to WildMind!</h1>
               <p className="text-white text-sm font-light">Sign up to access the platform.</p>
             </div>
@@ -515,13 +515,13 @@ export default function SignInForm() {
                     placeholder="Enter your email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value.trim())}
-                    className="w-full px-4 py-2 bg-[#171717] border border-[#464646] placeholder-[#9094A6] focus:outline-none focus:border-[#5AD7FF] rounded-2xl text-white text-base"
+                    className="w-full px-4 py-2 bg-[#171717] border border-[#464646] placeholder-[#9094A6] focus:outline-none focus:border-[#5AD7FF] rounded-full text-white text-base"
                     required
                   />
                 </div>
 
                 {/* Terms Checkbox */}
-                <div className="flex items-start space-x-3">
+                <div className="flex items-start space-x-3 ml-2">
                   <input
                     type="checkbox"
                     id="terms"
@@ -540,7 +540,7 @@ export default function SignInForm() {
                 <button
                   type="submit"
                   disabled={processing || !termsAccepted}
-                  className={`w-[440px] mx-auto py-2.5 rounded-full font-medium text-md transition-all duration-200 ${
+                  className={`w-full mx-auto py-2 rounded-full font-medium text-md transition-all duration-200 ${
                     processing || !termsAccepted
                       ? "bg-[#3A3A3A] text-[#9B9B9B] cursor-not-allowed"
                       : "bg-[#1C303D] hover:bg-[#3367D6] text-white"
