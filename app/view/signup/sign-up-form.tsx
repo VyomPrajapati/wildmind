@@ -317,7 +317,9 @@ export default function SignInForm() {
   }, [otpSent])
 
   return (
-    <div className="w-full h-full flex flex-col p-12 bg-[#1E1E1E]">
+    <div className="w-full h-full flex flex-col p-12 bg-[#1E1E1E]  ">        
+    <div className="absolute inset-0 bg-gradient-to-l from-gray-900/90 via-transparent to-transparent "></div>
+
       {/* Header with WildMind Logo - Top Left */}
       <div className="flex items-center mb-6">
         <Image 
@@ -328,10 +330,10 @@ export default function SignInForm() {
           className="h-10 w-auto"
         />
       </div>
-
+       
       {/* Form Content - Centered */}
-      <div className="flex-1 flex items-center justify-center -mt-4">
-        <div className="w-full max-w-md space-y-6">
+      <div className="flex-1 flex items-center justify-center -mt-4   ">
+        <div className="w-full max-w-md space-y-6  ">
           {/* Welcome Section - Only show when not on OTP screen, username screen, or login screen */}
           {!otpSent && !showUsernameForm && !showLoginForm && (
             <div className="text-start space-y-2">
@@ -379,7 +381,7 @@ export default function SignInForm() {
 
               {/* Email/Username Input */}
               <div className="space-y-3">
-                <label className="text-white font-regular text-md ml-2">Email address / User Name</label>
+                <label className="text-white font-regular text-md ">Email address / User Name</label>
                 <input
                   type="text"
                   placeholder="Enter your email"

@@ -34,6 +34,7 @@ export const imageRoutes: FolderImageRoutes = {
     
     sign:{
         signup: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/public%2Fsignin%2Fstableturbo-1742556691988.png?alt=media&token=603728fa-ea51-4965-82ea-b7e3bbc16dc8',
+        bg: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/public%2Fsignin%2Fbg.png?alt=media&token=603728fa-ea51-4965-82ea-b7e3bbc16dc8',
         
     },
     artstation:{
