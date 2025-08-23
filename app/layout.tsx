@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Wildmind",
+  title: "Wild Mind",
   description: "WildMind by WildChild Studios",
 };
 

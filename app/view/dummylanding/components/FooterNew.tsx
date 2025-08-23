@@ -5,11 +5,11 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { getImageUrl } from '@/routes/imageroute'
 import { NAV_ROUTES, FEATURE_ROUTES } from '@/routes/routes'
-import {
-  IconBrandYoutube,
-  IconBrandInstagram,
-  IconBrandX,
-} from '@tabler/icons-react'
+// import {
+//   IconBrandYoutube,
+//   IconBrandInstagram,
+//   IconBrandX,
+// } from '@tabler/icons-react'
 import Squares from './Squares'
 
 const FooterNew: React.FC = () => {
@@ -21,32 +21,32 @@ const FooterNew: React.FC = () => {
     { name: "DMCA", href: "" },
   ];
 
-  const socialLinks = [
-    {
-      title: "X",
-      icon: IconBrandX,
-      href: "#",
-      hoverColor: "hover:text-blue-500",
-      borderHoverColor: "hover:border-blue-500",
-      glowColor: "hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]",
-    },
-    {
-      title: "Instagram",
-      icon: IconBrandInstagram,
-      href: "#",
-      hoverColor: "hover:text-pink-800",
-      borderHoverColor: "hover:border-pink-800",
-      glowColor: "hover:shadow-[0_0_15px_rgba(236,72,153,0.5)]",
-    },
-    {
-      title: "Youtube",
-      icon: IconBrandYoutube,
-      href: "#",
-      hoverColor: "hover:text-red-700",
-      borderHoverColor: "hover:border-red-700",
-      glowColor: "hover:shadow-[0_0_15px_rgba(220,38,38,0.5)]",
-    },
-  ];
+  // const socialLinks = [
+  //   {
+  //     title: "X",
+  //     icon: IconBrandX,
+  //     href: "#",
+  //     hoverColor: "hover:text-blue-500",
+  //     borderHoverColor: "hover:border-blue-500",
+  //     glowColor: "hover:shadow-[0_0_15px_rgba(59,130,246,0.5)]",
+  //   },
+  //   {
+  //     title: "Instagram",
+  //     icon: IconBrandInstagram,
+  //     href: "#",
+  //     hoverColor: "hover:text-pink-800",
+  //     borderHoverColor: "hover:border-pink-800",
+  //     glowColor: "hover:shadow-[0_0_15px_rgba(236,72,153,0.5)]",
+  //   },
+  //   {
+  //     title: "Youtube",
+  //     icon: IconBrandYoutube,
+  //     href: "#",
+  //     hoverColor: "hover:text-red-700",
+  //     borderHoverColor: "hover:border-red-700",
+  //     glowColor: "hover:shadow-[0_0_15px_rgba(220,38,38,0.5)]",
+  //   },
+  // ];
 
   return (
     <footer className="relative z-[10] bg-[#0a1116] w-full">
@@ -64,10 +64,10 @@ const FooterNew: React.FC = () => {
            </div>
            <div className="relative z-10">
             {/* Main Footer Content */}
-            <div className="py-12 border-b border-white/10 mb:py-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 mb:gap-6">
+            <div className="py-8 border-b border-white/10 mb:py-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 md:grid-cols-5 lg:grid-cols-5 gap-8 lg:gap-0 mb:gap-6">
                 {/* Logo and Brand */}
-                <div className="lg:col-span-1">
+                <div className="lg:col-span-1 w-[100%] ">
                   <div className="mb-4">
                     <Image
                       src={getImageUrl("core", "logo") || "/placeholder.svg"}
@@ -82,7 +82,7 @@ const FooterNew: React.FC = () => {
                   </p>
                   
                   {/* Social Media Icons */}
-                  <div className="flex gap-4 mt-6 mb:gap-3">
+                  {/* <div className="flex gap-4 mt-6 mb:gap-3">
                     {socialLinks.map((social, index) => (
                       <Link
                         key={index}
@@ -93,69 +93,98 @@ const FooterNew: React.FC = () => {
                         <social.icon className="w-5 h-5 mb:w-4 mb:h-4" />
                       </Link>
                     ))}
-                  </div>
+                  </div> */}
                 </div>
 
                 {/* Home Category */}
-                <div className="space-y-4 ml-32 mb:ml-0">
+                <div className="space-y-4 ml-6">
                   <h3 className="text-white font-semibold text-sm uppercase tracking-wider">
-                    Home
+                  Solutions
                   </h3>
                   <ul className="space-y-3">
                     <li>
                       <Link href={NAV_ROUTES.PRICING} className="text-gray-400 text-sm hover:text-white transition-colors duration-200">
-                        Plans
+                      Wild Mind Suite
                       </Link>
                     </li>
                     <li>
                       <Link href="" className="text-gray-400 text-sm hover:text-white transition-colors duration-200">
-                        Features
+                      AI Image Generation
                       </Link>
                     </li>
                     <li>
                       <Link href={NAV_ROUTES.TEMPLATES} className="text-gray-400 text-sm hover:text-white transition-colors duration-200">
-                        Templets
+                      AI Video Generation
                       </Link>
                     </li>
                     <li>
                       <Link href={NAV_ROUTES.ART_STATION} className="text-gray-400 text-sm hover:text-white transition-colors duration-200">
-                        Art station
+                      AI Audio Generation
+                      </Link>                      </li>
+                      <li>
+
+                      <Link href={NAV_ROUTES.ART_STATION} className="text-gray-400 text-sm hover:text-white transition-colors duration-200">
+                      AI Filming tools
+                      </Link>                      </li>
+                      <li>
+
+                      <Link href={NAV_ROUTES.ART_STATION} className="text-gray-400 text-sm hover:text-white transition-colors duration-200">
+                      AI 3D Generation
                       </Link>
                     </li>
                   </ul>
                 </div>
 
                 {/* Features Category */}
-                <div className="space-y-4">
+                <div className="space-y-4 ml-6">
                   <h3 className="text-white font-semibold text-sm uppercase tracking-wider">
-                    Features
+                  Product
                   </h3>
                   <ul className="space-y-3">
                     <li>
                       <Link href={FEATURE_ROUTES.IMAGE_GENERATION} className="text-gray-400 text-sm hover:text-white transition-colors duration-200">
-                        Text to Image
+                      Pricing                      </Link>
+                    </li>
+                    <li>
+                      <Link href="#" className="text-gray-400 text-sm hover:text-white transition-colors duration-200">
+                      Enterprise
                       </Link>
                     </li>
                     <li>
                       <Link href="#" className="text-gray-400 text-sm hover:text-white transition-colors duration-200">
-                        Text to Video (soon)
+                      FAQs
                       </Link>
                     </li>
                     <li>
                       <Link href="#" className="text-gray-400 text-sm hover:text-white transition-colors duration-200">
-                        Sketch to Image (soon)
+                      Documentation
                       </Link>
                     </li>
                     <li>
                       <Link href="#" className="text-gray-400 text-sm hover:text-white transition-colors duration-200">
-                        Real Time Generation (soon)
+                      Terms for Use
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="#" className="text-gray-400 text-sm hover:text-white transition-colors duration-200">
+                      Privacy Policy
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="#" className="text-gray-400 text-sm hover:text-white transition-colors duration-200">
+                      Cookie Policy
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="#" className="text-gray-400 text-sm hover:text-white transition-colors duration-200">
+                      Cookie Settings
                       </Link>
                     </li>
                   </ul>
                 </div>
 
                 {/* Company Category */}
-                <div className="space-y-4">
+                <div className="space-y-4 ml-6">
                   <h3 className="text-white font-semibold text-sm uppercase tracking-wider">
                     Company
                   </h3>
@@ -167,7 +196,7 @@ const FooterNew: React.FC = () => {
                     </li>
                     <li>
                       <Link href={NAV_ROUTES.CONTACT} className="text-gray-400 text-sm hover:text-white transition-colors duration-200">
-                        ContactUs
+                        Careers
                       </Link>
                     </li>
                     <li>
@@ -180,6 +209,60 @@ const FooterNew: React.FC = () => {
                         About us
                       </Link>
                     </li>
+                    <li>
+                      <Link href="" className="text-gray-400 text-sm hover:text-white transition-colors duration-200">
+                      Newsletter
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="" className="text-gray-400 text-sm hover:text-white transition-colors duration-200">
+                      Affiliate Program
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="" className="text-gray-400 text-sm hover:text-white transition-colors duration-200">
+                      Wild Mind Creator Program
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="space-y-4 ml-6">
+                  <h3 className="text-white font-semibold text-sm uppercase tracking-wider">
+                  Stay Connected
+                  </h3>
+                  <ul className="space-y-3">
+                    <li>
+                      <Link href={NAV_ROUTES.BLOG} className="text-gray-400 text-sm hover:text-white transition-colors duration-200">
+                      Facebook
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href={NAV_ROUTES.CONTACT} className="text-gray-400 text-sm hover:text-white transition-colors duration-200">
+                      X
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href={NAV_ROUTES.SUPPORT} className="text-gray-400 text-sm hover:text-white transition-colors duration-200">
+                      Instagram
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="" className="text-gray-400 text-sm hover:text-white transition-colors duration-200">
+                      Youtube
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="" className="text-gray-400 text-sm hover:text-white transition-colors duration-200">
+                      LinkedIn
+                      </Link>
+                    </li>
+                    <li>
+                      <Link href="" className="text-gray-400 text-sm hover:text-white transition-colors duration-200">
+                      Help Center
+                      </Link>
+                    </li>
+                    
                   </ul>
                 </div>
               </div>
