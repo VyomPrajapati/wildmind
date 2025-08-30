@@ -109,11 +109,7 @@ const NAV_LAND = () => {
   }
 
   const handleGetStarted = () => {
-    if (isLoggedIn && userSlug) {
-      router.push(`/view/home/${userSlug}`)
-    } else {
-      router.push(APP_ROUTES.SIGNUP)
-    }
+    router.push('/view/HomePage')
   }
 
   const handleLogout = async () => {
