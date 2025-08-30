@@ -1,4 +1,5 @@
 import React from 'react'
+import { getImageUrl } from '../routes';
 
 export interface LayoutGridCard {
   id: number;
@@ -20,7 +21,7 @@ export const layoutGridCards: LayoutGridCard[] = [
       </div>
     ),
     className: "md:col-span-2",
-    thumbnail: "https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Faimodels%2Fkling.png?alt=media&token=0c1fe920-b40e-4ffa-87b2-66f8ab5d920d",
+    thumbnail: getImageUrl('aimodels', 'kling'),
     title: "Kling 2.0",
   },
   {
@@ -32,7 +33,7 @@ export const layoutGridCards: LayoutGridCard[] = [
       </div>
     ),
     className: "col-span-1",
-    thumbnail: "https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Faimodels%2Fveo3.png?alt=media&token=39cc736e-f7dc-4aff-8664-9d597288acd3",
+    thumbnail: getImageUrl('aimodels', 'veo3'),
     title: "Google Veo 3",
   },
   {
@@ -44,7 +45,7 @@ export const layoutGridCards: LayoutGridCard[] = [
       </div>
     ),
     className: "col-span-1",
-    thumbnail: "https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Faimodels%2Fkrea.png?alt=media&token=2210d1da-35c7-46af-9ccf-26e6ac461806",
+    thumbnail: getImageUrl('aimodels', 'krea'),
     title: "Flux.1 Krea",
   },
   {
@@ -56,7 +57,7 @@ export const layoutGridCards: LayoutGridCard[] = [
       </div>
     ),
     className: "md:col-span-2",
-    thumbnail: "https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Faimodels%2Frunway.png?alt=media&token=0d14df31-614a-41c8-8d67-2f84b8f693ce",
+    thumbnail: getImageUrl('aimodels', 'runway'),
     title: "Runway Gen 4 Aleph",
   },
 ];

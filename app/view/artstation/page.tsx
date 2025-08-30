@@ -4,7 +4,6 @@ import { useState, useEffect } from "react"
 import ImageOverlay from "./components/image-overlay"
 import Footer from "../Core/Footer"
 import NavigationFull from "../Core/NavigationFull"
-import Navigation from "../landingPage/components/Navigation"
 import MasonryLayout from "./components/masorny-layout"
 import { bookmarkStore } from "../../utils/bookmarkUtils"
 import { Bookmark } from "lucide-react"
@@ -229,7 +228,7 @@ export default function ArtStation() {
   return (
     <>
       {/* Conditional rendering based on screen size */}
-      {isMobile || isTablet ? <Navigation /> : <NavigationFull />}
+              <NavigationFull />
 
       <div className="w-full min-h-screen bg-black text-white  p-2 md:p-5">
         <div className="max-w-full md:max-w-[90%] mx-auto mt-16 md:mt-16">

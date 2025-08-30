@@ -4,6 +4,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import CardSwap, { Card } from './CardSwap';
 import { ChevronRight, Check } from 'lucide-react';
 import Image from 'next/image';
+import { getImageUrl } from '../routes';
 
 interface NewsletterSignupProps {
   onSubmit?: (email: string) => void
@@ -48,7 +49,7 @@ const NewsletterSignup: React.FC<NewsletterSignupProps> = ({ onSubmit }) => {
   }
 
   return (
-    <div className="relative z-0 mb-4 max-w-7xl mx-auto text-white p-6 sm:p-10 mb:p-4 mb:pb-12 rounded-3xl border border-white/20 backdrop-blur-lg bg-gradient-to-br from-white/5 to-transparent shadow-2xl overflow-hidden">
+    <div className="relative z-0 mb-4 max-w-7xl lg:max-w-7xl md:max-w-6xl mx-auto text-white p-6 sm:p-10 mb:p-4 mb:pb-12 rounded-3xl border border-white/20 backdrop-blur-lg bg-gradient-to-br from-white/5 to-transparent shadow-2xl overflow-hidden">
       <div className="absolute inset-[1px] bg-[#0a1116] rounded-2xl pointer-events-none z-0" />
 
       <div className="relative z-10 flex flex-col md:flex-row items-start justify-between gap-12 md:gap-20 mb:gap-6">
@@ -56,13 +57,13 @@ const NewsletterSignup: React.FC<NewsletterSignupProps> = ({ onSubmit }) => {
         <div className="flex-1 space-y-6 w-full mt-4 md:mt-6 mb:space-y-4">
           <div className="space-y-3">
             <span className="uppercase text-sm text-gray-300 tracking-widest mb:text-xs ml-2">Newsletter Signup</span>
-            <h2 className="text-3xl md:text-4xl font-bold drop-shadow-md mb:text-2xl ml-2">
+            <h2 className="text-3xl md:text-3xl font-bold drop-shadow-md mb:text-2xl ml-2">
               Subscribe for<br />the updates!
             </h2>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="relative flex items-center w-full">
+            <div className="relative flex items-center w-full md:w-[80%]">
               <input
                 type="email"
                 placeholder="Enter your email address"
@@ -133,7 +134,7 @@ const NewsletterSignup: React.FC<NewsletterSignupProps> = ({ onSubmit }) => {
                 Updates
               </div>
               <Image
-                src="https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fsubscribe%2Fupdates.png?alt=media&token=1621cc22-2e80-4a0e-8975-d738310a5471"
+                src={getImageUrl('subscribe', 'updates')}
                 alt="Updates"
                 width={320}
                 height={150}
@@ -146,7 +147,7 @@ const NewsletterSignup: React.FC<NewsletterSignupProps> = ({ onSubmit }) => {
                 Promotional Deals
               </div>
               <Image
-                src="https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fsubscribe%2Fpromo.png?alt=media&token=8497d01d-85c4-48ca-8c30-27da9e1d4fbd"
+                src={getImageUrl('subscribe', 'promo')}
                 alt="Promotions"
                 width={320}
                 height={150}
@@ -159,7 +160,7 @@ const NewsletterSignup: React.FC<NewsletterSignupProps> = ({ onSubmit }) => {
                 Newsletter
               </div>
               <Image
-                src="https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fsubscribe%2Fneswsl.png?alt=media&token=57d0ddeb-6c33-487a-a69e-9eb4c3ab00bf"
+                src={getImageUrl('subscribe', 'news')}
                 alt="Newsletter"
                 width={320}
                 height={150}

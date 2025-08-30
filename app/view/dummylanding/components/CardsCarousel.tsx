@@ -13,7 +13,7 @@ import {
   IconX,
 } from "@tabler/icons-react";
 import { cn } from "../../../lib/utils";
-import { AnimatePresence, motion } from "motion/react";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import type { ImageProps } from "next/image";
 // Note: We render a native <img/> for flexibility; no Next Image import needed here.
@@ -135,7 +135,7 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
     >
       <div className="relative w-full">
         <div
-          className="flex w-full overflow-x-scroll overscroll-x-auto py-10 [scrollbar-width:none] mb:py-6"
+          className="flex w-full overflow-x-scroll overscroll-x-auto py-10 md:py-8 lg:py-10 [scrollbar-width:none] overflow-x-hidden"
           ref={carouselRef}
           onScroll={checkScrollability}
         >
@@ -147,7 +147,7 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
 
           <div
             className={cn(
-              "flex flex-row justify-start gap-4 pl-4 mb:gap-3 mb:pl-3",
+              "flex flex-row justify-start gap-4 md:gap-3 lg:gap-4 pl-4 md:pl-3 lg:pl-4",
               "mx-auto max-w-7xl", // remove max-w-4xl if you want the carousel to span the full width of its container
             )}
           >
@@ -158,27 +158,27 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ duration: 0.5, delay: 0.2 * index, ease: "easeOut" }}
                 key={"card" + index}
-                className="rounded-3xl last:pr-[33%] mb:last:pr-[20%]"
+                className="rounded-3xl last:pr-[33%] md:last:pr-[25%] lg:last:pr-[30%]"
               >
                 {item}
               </motion.div>
             ))}
           </div>
         </div>
-        <div className="flex justify-end gap-2 mr-10 mb:mr-4">
+        <div className="flex justify-end gap-2 mr-10 md:mr-6 lg:mr-8">
           <button
-            className="relative z-40 flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 disabled:opacity-50 mb:h-9 mb:w-9"
+            className="relative z-40 flex h-10 w-10 md:h-9 md:w-9 lg:h-10 lg:w-10 items-center justify-center rounded-full bg-gray-100 disabled:opacity-50"
             onClick={scrollLeft}
             disabled={!canScrollLeft || isAnimating}
           >
-            <IconArrowNarrowLeft className="h-6 w-6 text-gray-500 mb:h-5 mb:w-5" />
+            <IconArrowNarrowLeft className="h-6 w-6 md:h-5 md:w-5 lg:h-6 lg:w-6 text-gray-500" />
           </button>
           <button
-            className="relative z-40 flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 disabled:opacity-50 mb:h-9 mb:w-9"
+            className="relative z-40 flex h-10 w-10 md:h-9 md:w-9 lg:h-10 lg:w-10 items-center justify-center rounded-full bg-gray-100 disabled:opacity-50"
             onClick={scrollRight}
             disabled={!canScrollRight || isAnimating}
           >
-            <IconArrowNarrowRight className="h-6 w-6 text-gray-500 mb:h-5 mb:w-5" />
+            <IconArrowNarrowRight className="h-6 w-6 md:h-5 md:w-5 lg:h-6 lg:w-6 text-gray-500" />
           </button>
         </div>
       </div>

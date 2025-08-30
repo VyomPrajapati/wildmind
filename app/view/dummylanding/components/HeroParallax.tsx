@@ -6,7 +6,7 @@ import {
   useTransform,
   useSpring,
   MotionValue,
-} from "motion/react";
+} from "framer-motion";
 import Image from "next/image";
 
 export const HeroParallax = ({
@@ -94,7 +94,7 @@ export const HeroParallax = ({
 
 export const Header = () => {
   return (
-    <div className="max-w-7xl relative mx-auto py-20 md:py-40 px-4 w-full">
+    <div className="max-w-8xl relative mx-auto py-20 md:py-40 px-2 w-full ml-32">
       <h1 className="text-2xl md:text-7xl font-bold text-white">
       Wild Mind <br /> <span className="ml-4">Your One Stop For AI Solutions</span>
       </h1>

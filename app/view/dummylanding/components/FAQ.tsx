@@ -80,7 +80,7 @@ const FAQ: React.FC<FAQProps> = ({ faqs = defaultFaqs, maxVisible = 6, viewMoreD
     <div className="w-full max-w-8xl mx-auto">
       {/* Keep header as-is (centered) with VariableProximity effect */}
       <div className="text-center" ref={headerRef}>
-        <h2 className="text-white inline-block font-bold font-popins text-[2.5rem] mb-8 mb:text-[2rem]">
+        <h2 className="text-white inline-block font-bold font-popins text-[2.5rem] md:text-[2rem] lg:text-[2.3rem] mb-8 md:mb-6 lg:mb-8">
           <VariableProximity
             label={'Frequently Asked Questions'}
             className={''}

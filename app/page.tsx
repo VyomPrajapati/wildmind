@@ -4,12 +4,14 @@ import React from 'react'
 // import Main from './view/landingPage/page';
 // import InChatHistory from './view/inchatHistory/page';
 // Define Page as a React functional component
-
+// import HomePage from './view/HomePage/page';
 import DummyLanding from './view/dummylanding/page';
-const Page: React.FC = () => {
-  return (
+// import SignUp from './view/signup/page'; 
+const Page: React.FC = () => {  
+  return (  
     <>
       <DummyLanding />
+
       {/* <SignUp /> */}
     {/* comment */}
       {/* <InpaintFluxAPI/> */}

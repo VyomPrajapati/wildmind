@@ -17,7 +17,7 @@ import {
   useScroll,
   useMotionValueEvent,
   AnimatePresence,
-} from "motion/react"
+} from "framer-motion"
 
 const NAV_LAND = () => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
@@ -234,7 +234,7 @@ const NAV_LAND = () => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="fixed left-1/2 transform -translate-x-1/2 z-50 backdrop-blur-xl bg-black/10 shadow-lg border border-white/20 rounded-3xl px-10 py-8 transition-all duration-300"
+            className="fixed left-1/2 transform -translate-x-1/2 z-50 backdrop-blur-xl bg-black/10 shadow-lg border border-white/20 rounded-3xl px-10 py-8 md:px-6 md:py-6 transition-all duration-300"
             style={{
               width: visible ? "40%" : "45vw",
               minWidth: visible ? "40%" : "40vw",
@@ -242,16 +242,16 @@ const NAV_LAND = () => {
             }}
           >
             <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-4 gap-4 lg:gap-6 font-poppins">
-              <div className="col-span-1">
+              <div className="col-span-1 md:col-span1">
                 <ImageGeneration />
               </div>
-              <div className="col-span-1">
+              <div className="col-span-1 md:col-span1">
                 <BrandingKit />
               </div>
-              <div className="col-span-1">
+              <div className="col-span-1 md:col-span1">
                 <VideoGeneration />
               </div>
-              <div className="col-span-1">
+              <div className="col-span-1 md:col-span1">
                 <AudioGeneration />
               </div>
               {/* <div className="col-span-1"> */}

@@ -9,7 +9,7 @@ import VariableProximity from './components/VariableProximity'
 import { Carousel, Card } from './components/CardsCarousel'
 import { LayoutGrid } from './components/LayoutGrid'
 import { CardContainer, CardBody, CardItem } from './components/3DCardEffect'
-import NAV_LAND from '../landingPage/components/NAV_LAND'
+import NAV_LAND from './components/NAV_LAND'
 import FeatuesAll from './components/FeatuesAll'
 import Subscribe from './components/subscribe'
 import SpotlightCard from './components/SpotlightCard'
@@ -19,9 +19,10 @@ import { carouselCards } from './data/carouselData'
 import { layoutGridCards } from './data/layoutGridData'
 import { heroProducts } from './data/heroParallaxData'
 import { worldMapDots } from './data/worldMapData'
-import FooterNew from './components/FooterNew'
+import FooterNew from '../Core/FooterNew'
 import { HoverBorderGradient } from './components/hover-border-gradiant'
 import { WobbleCard } from './components/wobble-card'
+import { getImageUrl } from './routes'
 
 // Lazy load heavy components
 const LazyCircularGallery = React.lazy(() => import('./components/CicularGallery').then(module => ({ default: module.default })))
@@ -161,9 +162,9 @@ const Page = () => {
   return (
 
     
-    <div className='relative w-full h-full bg-[#0a1116]'>                    
+    <div className='relative w-full h-full bg-[#0a1116] mb:w-full mb:h-full'>                    
 
-    <div className="fixed top-0 left-0 right-0 z-[100] flex justify-center px-6 mb:px-3">
+    <div className="fixed top-0 left-0 right-0 z-[100] flex justify-center px-6 md:px-4 lg:px-6">
         <NAV_LAND />
     </div>
                 
@@ -172,15 +173,15 @@ const Page = () => {
     </div>
     
     {/* Spacer to ensure proper separation (minimized) */}
-    <div className="h-0 bg-[#0a1116]"></div>
+    <div className="h-0 bg-[#0a1116] md:h-32 md:mt-48 md:mb-24"></div>
 
     {/* New sections after HeroParallax (not nested inside) */}
-    <div className={`relative z-[10] bg-[#0a1116] px-8 pt-2 pb-20 flex flex-col items-center text-center mb:px-4 mb:pt-1 ${unlockBelow ? '' : 'min-h-[100vh] overflow-hidden'}`}>
+    <div className={`relative z-[10] bg-[#0a1116] px-8 md:px-8 md:mt-32 lg:px-8 pt-2 md:pt-1 lg:pt-2 pb-20 md:pb-16 lg:pb-20 flex flex-col items-center text-center ${unlockBelow ? '' : 'min-h-[100vh] overflow-hidden'}`}>
       <ScrollFloat
-        containerClassName="text-center"
+        containerClassName="text-center md:mt-24"
         animationDuration={5}
         ease="back.inOut(5)"
-        textClassName="text-white font-semibold font-poppins text-[clamp(6rem,8vw,6rem)] mb:text-[clamp(2rem,8vw,3rem)]"
+        textClassName="text-white font-semibold font-poppins text-[clamp(6rem,8vw,6rem)] md:text-[clamp(4rem,6vw,5rem)] lg:text-[clamp(5rem,7vw,5.5rem)]"
         scrollStart="top 85%"
         scrollEnd="bottom 25%"
       >
@@ -188,17 +189,17 @@ const Page = () => {
       </ScrollFloat>
 
       <ScrollFloat
-        containerClassName="text-center -mt-8"
-        textClassName="text-white font-semibold font-poppins text-[clamp(6rem,8vw,6rem)] mb:text-[clamp(2rem,8vw,3rem)]"
-        scrollStart="top 85%"
+        containerClassName="text-center -mt-8 md:-mt-6 lg:-mt-8 md:mb-16"
+        textClassName="text-white font-semibold font-poppins text-[clamp(6rem,8vw,6rem)] md:text-[clamp(4rem,6vw,5rem)] lg:text-[clamp(5rem,7vw,5.5rem)]"
+        scrollStart="top 100%"
         scrollEnd="bottom 25%"
       >
         Content Production Pipeline
       </ScrollFloat>
 
       <ScrollFloat
-        containerClassName="text-center mt-12"
-        textClassName="text-white font-semibold font-poppins text-[clamp(6rem,8vw,6rem)] mb:text-[clamp(2rem,8vw,3rem)]"
+        containerClassName="text-center mt-12 md:mt-8 lg:mt-12"
+        textClassName="text-white font-semibold font-poppins text-[clamp(6rem,8vw,6rem)] md:text-[clamp(4rem,6vw,5rem)] lg:text-[clamp(5rem,7vw,5.5rem)]"
         scrollStart="top 85%"
         scrollEnd="bottom 25%"
       >
@@ -206,24 +207,24 @@ const Page = () => {
       </ScrollFloat>
 
       <ScrollFloat
-        containerClassName="text-center -mt-8"
-        textClassName="text-white font-semibold font-poppins text-[clamp(6rem,8vw,6rem)] mb:text-[clamp(2rem,8vw,3rem)]"
+        containerClassName="text-center -mt-8 md:-mt-6 lg:-mt-8"
+        textClassName="text-white font-semibold font-poppins text-[clamp(6rem,8vw,6rem)] md:text-[clamp(4rem,6vw,5rem)] lg:text-[clamp(5rem,7vw,5.5rem)]"
         scrollStart="top 85%"
         scrollEnd="bottom 25%"
       >
         To Final Scene Generation
       </ScrollFloat>
 
-      <div ref={afterScrollFloatRef} className="h-[32vh] mb:h-[20vh]" />
+      <div ref={afterScrollFloatRef} className="h-[32vh] md:h-[24vh] lg:h-[28vh]" />
 
       {/* Invisible unlock sentinel placed after both ScrollFloat headings */}
       <div ref={unlockRef} className="h-1" />
 
       {unlockBelow && showProximity && (
-        <div ref={proximityContainerRef} style={{ position: 'relative' }} className="mt-4 mb:mt-6">
+        <div ref={proximityContainerRef} style={{ position: 'relative' }} className="mt-4 md:mt-6 lg:mt-4">
             <VariableProximity
               label={'We have got you covered with Image Generation, Video Creation, Audio Production, Branding Requirements, Filming Tools, and 3D Objects!'}
-              className={'variable-proximity-demo text-white font-semibold text-[3rem] mb:text-[clamp(1.6rem,6vw,3.5rem)]'}
+              className={'variable-proximity-demo text-white font-semibold text-[3rem] md:text-[2.5rem] lg:text-[2.8rem]'}
               fromFontVariationSettings="'wght' 400"
               toFontVariationSettings="'wght' 900"
               containerRef={proximityContainerRef}
@@ -236,8 +237,8 @@ const Page = () => {
     
     {/* Consolidated sections with same background */}
     <div className={`bg-[#0a1116] ${unlockBelow ? '' : 'opacity-0 pointer-events-none'}`}>
-      <div className="w-full h-full py-20" ref={hKnowRef}>
-        <h2 className="text-white text-center flex justify-center items-center font-bold font-poppins dark:text-neutral-200 text-[3rem] mb-6 mb:text-[2rem] mb:px-4 mb:mb-4">
+      <div className="w-full h-full py-20 md:py-16 lg:py-20" ref={hKnowRef}>
+        <h2 className="text-white text-center flex justify-center items-center font-bold font-poppins dark:text-neutral-200 text-[3rem] md:text-[2.5rem] lg:text-[2.8rem] mb-6 md:mb-4 lg:mb-6 md:px-4 lg:px-6">
           <VariableProximity
             label={'Feature Categories'}
             className={''}
@@ -257,7 +258,7 @@ const Page = () => {
         {/* <ArtGallery /> */}
         {/* <SocialMediaSuite /> */}
         <div ref={hFeaturesRef}>
-          <p id="features-heading" className="text-white text-center flex justify-center items-center font-bold font-poppins dark:text-neutral-200 text-[3rem] mb-10 mb:text-[2rem] mb:px-4 mb:mb-4">
+          <p id="features-heading" className="text-white text-center flex justify-center items-center font-bold font-poppins dark:text-neutral-200 text-[3rem] md:text-[2.5rem] lg:text-[2.8rem] mb-10 md:mb-6 lg:mb-10 md:px-4 lg:px-6">
             <VariableProximity
               label={'Explore All Our Features'}
               className={''}
@@ -274,10 +275,10 @@ const Page = () => {
         </div>
 
         {/* Additional ScrollFloat under Features section - ensure visibility even with short content */}
-        <div className="relative z-[10] bg-[#0a1116] px-8 pt-12 flex flex-col items-center min-h-[30vh] text-center mb:px-4 mb:pt-8 mb:min-h-[20vh]">
+        <div className="relative z-[10] bg-[#0a1116] px-8 md:px-6 lg:px-8 pt-12 md:pt-8 lg:pt-12 flex flex-col items-center min-h-[30vh] md:min-h-[24vh] lg:min-h-[28vh] text-center">
           <ScrollFloat
             containerClassName="text-center"
-            textClassName="text-white font-semibold font-poppins text-[clamp(6rem,8vw,6rem)] mb:text-[clamp(2rem,8vw,3rem)]"
+            textClassName="text-white font-semibold font-poppins text-[clamp(6rem,8vw,6rem)] md:text-[clamp(4rem,6vw,5rem)] lg:text-[clamp(5rem,7vw,5.5rem)]"
             scrollStart="top 85%"
             scrollEnd="bottom 25%"
           >
@@ -287,7 +288,7 @@ const Page = () => {
 
         {/* Heading under the second ScrollFloat */}
         <div ref={hHighlightsRef}>
-          <p className="text-white text-center flex justify-center items-center font-bold font-poppins dark:text-neutral-200 text-[3rem] mb-6 mb:text-[2rem] mb:px-4 mb:mb-3">
+          <p className="text-white text-center flex justify-center items-center font-bold font-poppins dark:text-neutral-200 text-[3rem] md:text-[2.5rem] lg:text-[2.8rem] mb-6 md:mb-4 lg:mb-6 md:px-4 lg:px-6">
             <VariableProximity
               label={'Check The Latest AI Models Added!'}
               className={''}
@@ -301,13 +302,13 @@ const Page = () => {
         </div>
 
         {/* LayoutGrid section */}
-        <div className="px-8 mb:px-4 -mt-4">
+        <div className="px-8 md:px-6 lg:px-8 -mt-4 md:-mt-2 lg:-mt-4">
           <LayoutGrid cards={layoutGridCards} />
         </div>
 
         {/* Workflows */}
         <div ref={hWorkflowsRef}>
-          <p className="text-white text-center flex justify-center items-center font-bold font-poppins dark:text-neutral-200 text-[3rem] mb-6 mt-12 mb:text-[2rem] mb:px-4 mb:mb-4 mb:mt-8">
+          <p className="text-white text-center flex justify-center items-center font-bold font-poppins dark:text-neutral-200 text-[3rem] md:text-[2.5rem] lg:text-[2.8rem] mb-6 md:mb-4 lg:mb-6 mt-12 md:mt-8 lg:mt-12 md:px-4 lg:px-6">
             <VariableProximity
               label={'Workflows Filtered Based On Your Requirements'}
               className={''}
@@ -320,24 +321,24 @@ const Page = () => {
           </p>
         </div>
         <div className="relative w-full">
-          <div className="flex gap-6 overflow-x-auto px-4 py-4 [scrollbar-width:none] mb:gap-4 mb:px-3 mb:py-3 scroll-smooth" style={{ WebkitOverflowScrolling: 'touch', scrollBehavior: 'smooth' }} ref={workflowScrollRef} onScroll={checkWorkflowScrollability}>
+          <div className="flex gap-6 md:gap-4 lg:gap-6 overflow-x-auto px-4 md:px-3 lg:px-4 py-4 md:py-3 lg:py-4 [scrollbar-width:none] scroll-smooth" style={{ WebkitOverflowScrolling: 'touch', scrollBehavior: 'smooth' }} ref={workflowScrollRef} onScroll={checkWorkflowScrollability}>
             {workflowCards.map((item, idx) => (
               <CardContainer key={item.title + idx} className="inter-var" containerClassName="py-6">
-                <CardBody className="bg-[#0f181f] relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-[24rem] h-auto rounded-xl p-6 border mb:w-[18rem] mb:p-4">
-                  <CardItem translateZ="50" className="text-xl font-bold text-white dark:text-white mb:text-lg">
+                <CardBody className="bg-[#0f181f] relative group/card dark:hover:shadow-2xl dark:hover:shadow-emerald-500/[0.1] dark:bg-black dark:border-white/[0.2] border-black/[0.1] w-[24rem] md:w-[20rem] lg:w-[22rem] h-auto rounded-xl p-6 md:p-4 lg:p-5 border">
+                  <CardItem translateZ="50" className="text-xl md:text-lg lg:text-xl font-bold text-white dark:text-white">
                     {item.title}
                   </CardItem>
-                  <CardItem translateZ="100" rotateX={20} rotateZ={-10} className="w-full mt-4 mb:mt-3">
+                  <CardItem translateZ="100" rotateX={20} rotateZ={-10} className="w-full mt-4 md:mt-3 lg:mt-4">
                     <Image
                       src={item.src}
                       height={1000}
                       width={1000}
-                      className="h-60 w-full object-cover rounded-xl group-hover/card:shadow-xl mb:h-44"
+                      className="h-60 md:h-48 lg:h-56 w-full object-cover rounded-xl group-hover/card:shadow-xl"
                       alt="thumbnail"
                     />
                   </CardItem>
-                  <div className="flex justify-end items-center mt-16 mb:mt-10">
-                    <CardItem translateZ="20" translateX={40} as="button" className="px-4 py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs font-bold mb:px-3 mb:text-[10px]">
+                  <div className="flex justify-end items-center mt-16 md:mt-12 lg:mt-14">
+                    <CardItem translateZ="20" translateX={40} as="button" className="px-4 md:px-3 lg:px-4 py-2 md:py-1.5 lg:py-2 rounded-xl bg-black dark:bg-white dark:text-black text-white text-xs md:text-[10px] lg:text-xs font-bold">
                       Explore
                     </CardItem>
                   </div>
@@ -346,10 +347,10 @@ const Page = () => {
             ))}
           </div>
           {/* Workflow Navigation Arrows */}
-          <div className="flex justify-end gap-2 mr-10 mb:mr-4">
+          <div className="flex justify-end gap-2 mr-10 md:mr-6 lg:mr-8">
             <button
               onClick={scrollWorkflowLeft}
-              className="relative z-40 flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 disabled:opacity-50 mb:h-9 mb:w-9"
+              className="relative z-40 flex h-10 w-10 md:h-9 md:w-9 lg:h-10 lg:w-10 items-center justify-center rounded-full bg-gray-100 disabled:opacity-50"
               disabled={!canScrollWorkflowLeft}
             >
               <svg
@@ -360,14 +361,14 @@ const Page = () => {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="h-6 w-6 text-gray-500 mb:h-5 mb:w-5"
+                className="h-6 w-6 md:h-5 md:w-5 lg:h-6 lg:w-6 text-gray-500"
               >
                 <polyline points="15,18 9,12 15,6" />
               </svg>
             </button>
             <button
               onClick={scrollWorkflowRight}
-              className="relative z-40 flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 disabled:opacity-50 mb:h-9 mb:w-9"
+              className="relative z-40 flex h-10 w-10 md:h-9 md:w-9 lg:h-10 lg:w-10 items-center justify-center rounded-full bg-gray-100 disabled:opacity-50"
               disabled={!canScrollWorkflowRight}
             >
               <svg
@@ -378,7 +379,7 @@ const Page = () => {
                 strokeWidth="2"
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="h-6 w-6 text-gray-500 mb:h-5 mb:w-5"
+                className="h-6 w-6 md:h-5 md:w-5 lg:h-6 lg:w-6 text-gray-500"
               >
                 <polyline points="9,18 15,12 9,6" />
               </svg>
@@ -387,8 +388,8 @@ const Page = () => {
         </div>
         
         {/* WorldMap Section */}
-        <div className="w-full max-w-7xl mx-auto px-8 mb:px-4 mt-16 mb:mt-12" ref={hGlobalRef}>
-          <h2 className="text-white text-center font-bold font-poppins dark:text-neutral-200 text-[3rem] mb-10 mb:text-[2rem] mb:px-4 mb:mb-4">
+        <div className="w-full max-w-7xl mx-auto px-8 md:px-6 lg:px-8 mt-16 md:mt-12 lg:mt-16" ref={hGlobalRef}>
+          <h2 className="text-white text-center font-bold font-poppins dark:text-neutral-200 text-[3rem] md:text-[2.5rem] lg:text-[2.8rem] mb-10 md:mb-6 lg:mb-10 md:px-4 lg:px-6">
             <VariableProximity
               label={'Powering users across the globe, one platform everywhere.'}
               className={''}
@@ -408,8 +409,8 @@ const Page = () => {
         </div>
 
         {/* Why choose wildmindAI Section */}
-        <div className="w-full max-w-7xl mx-auto px-8 mb:px-4 mt-32 mb:mt-16" ref={hWhyRef}>
-          <h2 className="text-white text-center font-bold font-poppins dark:text-neutral-200 text-[3rem] mb-6 mb:text-[2rem] mb:px-4 mb:mb-4">
+        <div className="w-full max-w-7xl mx-auto px-8 md:px-6 lg:px-8 mt-32 md:mt-20 lg:mt-28" ref={hWhyRef}>
+          <h2 className="text-white text-center font-bold font-poppins dark:text-neutral-200 text-[3rem] md:text-[2.5rem] lg:text-[2.8rem] mb-6 md:mb-4 lg:mb-6 md:px-4 lg:px-6">
             <VariableProximity
               label={'Why Choose Wild Mind?'}
               className={''}
@@ -420,14 +421,14 @@ const Page = () => {
               falloff='linear'
             />
           </h2>
-          <p className="text-white text-center font-medium font-poppins text-xl mb:text-lg mb-8 mb:mb-6 opacity-90">
+          <p className="text-white text-center font-medium font-poppins text-xl md:text-lg lg:text-xl mb-8 md:mb-6 lg:mb-8 opacity-90">
             Powerful. Affordable. Built for creators and teams that expect more from AI.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-3 lg:gap-4">
             <SpotlightCard className="bg-white/10 border-neutral-800">
               <div className="relative">
-                <h3 className="text-neutral-200 font-semibold text-lg mb-3">All-in-One Multimodal AI Platform</h3>
-                <p className="text-neutral-400 text-sm leading-relaxed text-justify">Get everything you need: text, image, branding collaterals, video, audio, and more!
+                <h3 className="text-neutral-200 font-semibold text-lg md:text-base lg:text-lg mb-3 md:mb-2 lg:mb-3">All-in-One Multimodal AI Platform</h3>
+                <p className="text-neutral-400 text-sm md:text-xs lg:text-sm leading-relaxed text-justify">Get everything you need: text, image, branding collaterals, video, audio, and more!
                     Over 20+ Generative AI features in one powerful AI workspace.
                     No need to juggle tools or platforms.
                 </p>
@@ -436,30 +437,30 @@ const Page = () => {
             
             <SpotlightCard className="bg-white/10 border-neutral-800">
               <div className="relative">
-                <h3 className="text-neutral-200 font-semibold text-lg mb-3">Industry-Leading Value for Price</h3>
-                <p className="text-neutral-400 text-sm leading-relaxed text-justify">We offer the most affordable AI platform on the market. No competitor matches the features and performance you get at our price point.</p>
+                <h3 className="text-neutral-200 font-semibold text-lg md:text-base lg:text-lg mb-3 md:mb-2 lg:mb-3">Industry-Leading Value for Price</h3>
+                <p className="text-neutral-400 text-sm md:text-xs lg:text-sm leading-relaxed text-justify">We offer the most affordable AI platform on the market. No competitor matches the features and performance you get at our price point.</p>
               </div>
             </SpotlightCard>
             
             <SpotlightCard className="bg-white/10 border-neutral-800">
               <div className="relative">
-                <h3 className="text-neutral-200 font-semibold text-lg mb-3">Flexible Credit System with On-Demand Top-Ups</h3>
-                <p className="text-neutral-400 text-sm leading-relaxed text-justify">Run out of credits? Buy exactly what you need, whether it&apos;s 1,000 or 10,000 credits. No rigid tiers, no waste, just full control.</p>
+                <h3 className="text-neutral-200 font-semibold text-lg md:text-base lg:text-lg mb-3 md:mb-2 lg:mb-3">Flexible Credit System with On-Demand Top-Ups</h3>
+                <p className="text-neutral-400 text-sm md:text-xs lg:text-sm leading-relaxed text-justify">Run out of credits? Buy exactly what you need, whether it&apos;s 1,000 or 10,000 credits. No rigid tiers, no waste, just full control.</p>
               </div>
             </SpotlightCard>
             
             <SpotlightCard className="bg-white/10 border-neutral-800">
               <div className="relative">
-                <h3 className="text-neutral-200 font-semibold text-lg mb-3">Always Up-to-Date with the Best AI Models</h3>
-                <p className="text-neutral-400 text-sm leading-relaxed text-justify">We integrate the world&apos;s most advanced AI models and continuously upgrade to the latest versions, ensuring you always achieve the best possible results.</p>
+                <h3 className="text-neutral-200 font-semibold text-lg md:text-base lg:text-lg mb-3 md:mb-2 lg:mb-3">Always Up-to-Date with the Best AI Models</h3>
+                <p className="text-neutral-400 text-sm md:text-xs lg:text-sm leading-relaxed text-justify">We integrate the world&apos;s most advanced AI models and continuously upgrade to the latest versions, ensuring you always achieve the best possible results.</p>
               </div>
             </SpotlightCard>
           </div>
         </div>
 
         {/* WobbleCard Section */}
-        <div className="w-full max-w-7xl mx-auto px-8 mb:px-4 mt-32 mb:mt-12" ref={hPricingRef}>
-          <h2 className="text-white text-center font-bold font-poppins dark:text-neutral-200 text-[3rem] mb-10 mb:text-[2rem] mb:px-4 mb:mb-4">
+        <div className="w-full max-w-7xl mx-auto px-8 md:px-6 lg:px-8 mt-32 md:mt-20 lg:mt-28" ref={hPricingRef}>
+          <h2 className="text-white text-center font-bold font-poppins dark:text-neutral-200 text-[3rem] md:text-[2.5rem] lg:text-[2.8rem] mb-10 md:mb-6 lg:mb-10 md:px-4 lg:px-6">
             <VariableProximity
               label={'Unmatched Value, Unbeatable Pricing Plans.'}
               className={''}
@@ -470,22 +471,22 @@ const Page = () => {
               falloff='linear'
             />
           </h2>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mb:gap-3 max-w-7xl mx-auto w-full">
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-3 gap-4 md:gap-3 lg:gap-4 max-w-7xl mx-auto w-full">
             <WobbleCard
-              containerClassName="col-span-1 lg:col-span-2 h-full bg-pink-800 min-h-[500px] lg:min-h-[300px] mb:min-h-[320px] mobile:min-h-[360px]"
+              containerClassName="col-span-1 lg:col-span-2 md:col-span-2 h-full bg-pink-800 min-h-[500px] md:min-h-[350px] lg:min-h-[400px]"
               className=""
             >
-              <div className="max-w-xs">
-                <h2 className="text-left text-balance text-base md:text-xl lg:text-4xl font-semibold tracking-[-0.015em] text-white font-poppins">
+              <div className="max-w-xs md:max-w-sm lg:max-w-xs">
+                <h2 className="text-left text-balance text-base md:text-2xl lg:text-2xl font-semibold tracking-[-0.015em] text-white font-poppins">
                   Free Plan
                 </h2>
-                <p className="mt-4 text-left font-poppins text-neutral-200 text-justify font-medium">
+                <p className="mt-4 md:mt-3 lg:mt-4 text-left font-poppins text-neutral-200 text-justify font-medium text-sm md:text-sm lg:text-sm">
                 Get started with 2,100 free credits and access to our full creative suite. No cost, no commitment, just pure AI power from day one. Generate 100+ Images monthly with the free plan
                 </p>
               </div>
               <div className="absolute -right-16 md:-right-[40%] lg:-right-[35%] -bottom-20 mb:static mb-10 mb:mt-6 mb:w-[90%] mb:max-w-[320px] mb:mx-auto mobile:w-[85%]">
                 <Image
-                  src="https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fpricing%2Ffree%20plan.jpg?alt=media&token=455cc4fb-9efc-4082-a27d-540b45430896"
+                  src={getImageUrl('pricing', 'freePlan')}
                   width={500}
                   height={500}
                   alt="WildmindAI demo image"
@@ -493,20 +494,32 @@ const Page = () => {
                 />
               </div>
             </WobbleCard>
-            <WobbleCard containerClassName="col-span-1 min-h-[300px] mb:min-h-[220px] bg-[#288F1A]">
-              <h2 className="max-w-80  text-left text-balance text-base md:text-xl lg:text-4xl font-semibold tracking-[-0.015em] text-white font-poppins">
-                Student Discount
-              </h2>
-              <p className="mt-4 max-w-[26rem] text-left text-base/6 text-neutral-200 text-justify font-medium">
-              Students save 33% on all plans — verified student ID required. Unlock pro-level AI tools at a student-friendly price.
-              </p>
+            <WobbleCard containerClassName="col-span-1 md:col-span-1 min-h-[300px] md:min-h-[250px] lg:min-h-[280px] bg-[#288F1A] relative overflow-hidden">
+              {/* Background Image */}
+              <div className="absolute inset-0 z-0">
+                <img
+                  src={getImageUrl('pricing', 'wizardsChess')}
+                  alt="Background"
+                  className="absolute bottom-0 right-0 w-96 md:w-[28rem] lg:w-[32rem] h-56 md:h-64 lg:h-72 object-contain opacity-80"
+                />
+              </div>
+              
+              {/* Content with higher z-index to overlap image */}
+              <div className="relative z-10">
+                <h2 className="max-w-80 text-left text-balance text-base md:text-2xl lg:text-2xl font-semibold tracking-[-0.015em] text-white font-poppins">
+                  Student Discount
+                </h2>
+                <p className="mt-4 md:mt-3 lg:mt-4 max-w-[26rem] text-left text-base/6 md:text-sm lg:text-base text-neutral-200 text-justify font-medium">
+                Students save 33% on all plans — verified student ID required. Unlock pro-level AI tools at a student-friendly price.
+                </p>
+              </div>
             </WobbleCard>
-            <WobbleCard containerClassName="col-span-1 lg:col-span-3 bg-[#3F2185] min-h-[500px] lg:min-h-[600px] xl:min-h-[300px] mb:min-h-[360px] mobile:min-h-[420px]">
-              <div className="max-w-sm">
-                <h2 className="max-w-sm md:max-w-lg text-left text-balance text-base md:text-xl lg:text-4xl font-semibold tracking-[-0.015em] text-white font-poppins">
+            <WobbleCard containerClassName="col-span-1 lg:col-span-3 md:col-span-3 bg-[#3F2185] min-h-[500px] md:min-h-[400px] lg:min-h-[500px]">
+              <div className="max-w-sm md:max-w-md lg:max-w-sm">
+                <h2 className="max-w-sm md:max-w-lg text-left text-balance text-base md:text-2xl lg:text-2xl font-semibold tracking-[-0.015em] text-white font-poppins">
                   Explore All Plans
                 </h2>
-                <p className="mt-4 max-w-[26rem] text-left  text-base/6 text-neutral-200 text-justify mr-2 font-medium ">
+                <p className="mt-4 md:mt-3 lg:mt-4 max-w-[26rem] text-left text-base/6 md:text-sm lg:text-base text-neutral-200 text-justify mr-2 font-medium">
                 From hobbyist to enterprise, our plans <br/>scale with your creativity. Get more<br/>credits, more power, more freedom — <br/>see what fits you best
                 </p>
               </div>
@@ -517,18 +530,18 @@ const Page = () => {
               </button>
               
               <Image
-                src="https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fpricing%2Fexplore_plans.jpg?alt=media&token=1c4ba5d2-b254-48ef-80eb-9c1f8597ce57"
+                src={getImageUrl('pricing', 'explorePlans')}
                 width={500}
                 height={500}
                 alt="WildmindAI demo image"
-                className="grayscale filter absolute -right-10 md:-right-[40%] lg:-right-[20%] -bottom-10 object-contain rounded-2xl mb:static mb:mt-6 mb:w-[80%] mb:max-w-[320px] mb:mx-auto mobile:w-[85%]"
+                className="grayscale filter absolute -right-10 md:-right-[20%] lg:-right-[20%] -bottom-10 object-contain rounded-2xl mb:static mb:mt-6 mb:w-[80%] mb:max-w-[320px] mb:mx-auto mobile:w-[85%]"
               />
             </WobbleCard>
           </div>
         </div>
 
         {/* Get Started for Free Button */}
-        <div className="mt-32 mb:mt-12 flex justify-center text-center">
+        <div className="mt-32 md:mt-20 lg:mt-28 flex justify-center text-center">
           <HoverBorderGradient
             containerClassName="rounded-full border border-[#1C303D] dark:border-white/20"
             as="button"
@@ -536,7 +549,7 @@ const Page = () => {
             clockwise={false}
             glowBlurPx={0.5}
             innerFillClassName="bg-[#1C303D]"
-            className="text-white flex items-center space-x-2 px-8 py-4 mb:px-5 mb:py-3 mb:text-sm rounded-full"
+            className="text-white flex items-center space-x-2 px-8 py-4 md:px-6 md:py-3 lg:px-8 lg:py-4 md:text-sm lg:text-base rounded-full"
             onClick={() => router.push('/signup')}
           >
             <span>Start Generating</span>
@@ -544,12 +557,12 @@ const Page = () => {
         </div>
 
         {/* FAQ */}
-        <div className="w-full max-w-7xl mx-auto px-8 mb:px-4 mt-32 mb:mt-12">
+        <div className="w-full max-w-7xl mx-auto px-8 md:px-6 lg:px-8 mt-32 md:mt-20 lg:mt-28">
           <FAQ />
         </div>
 
         {/* Circular Gallery (same placement as landingPage) */}
-        <div className="w-full max-w-10xl mx-auto px-8 mb:px-4 mt-16 mb:mt-12" ref={hArtGalleryRef}>
+        <div className="w-full max-w-10xl mx-auto px-8 md:px-6 lg:px-8 mt-16 md:mt-12 lg:mt-16" ref={hArtGalleryRef}>
           <div className="relative">
             {/* translucent overlay and big label covering both galleries */}
             <div className="pointer-events-none absolute inset-0 z-[35] flex items-center justify-center">
@@ -578,15 +591,15 @@ const Page = () => {
                     scrollEase={0.02}
                     imageGap={0.8}
                     items={[
-                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fimg1.png?alt=media&token=636b6993-8838-417a-b40b-9a109675a848', text: '' },
-                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fimg2.png?alt=media&token=507a37f0-ef55-4867-ab1f-79b92cb2d2d5', text: '' },
-                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fimg3.png?alt=media&token=01bc4c52-e552-4a93-8f6c-8e62fdf11930', text: '' },
-                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex1.png?alt=media&token=def5ff0e-f95d-4622-9987-38b92b4f2982', text: '' },
-                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex2.png?alt=media&token=ff63ea0e-6335-4b41-87cf-738636039ecb', text: '' },
-                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex3.png?alt=media&token=f198a71f-2319-4b79-9dcd-d7355161032a', text: '' },
-                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex4.png?alt=media&token=8c83af98-29a4-44f7-8135-da8aed0ec78d', text: '' },
-                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex5.png?alt=media&token=4fdb2267-b1f2-4a80-b900-d6631c08378c', text: '' },
-                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex6.png?alt=media&token=9ffa68a0-a392-4ced-a154-761a8046df86', text: '' },
+                      { image: getImageUrl('artgallery', 'img1'), text: '' },
+                      { image: getImageUrl('artgallery', 'img2'), text: '' },
+                      { image: getImageUrl('artgallery', 'img3'), text: '' },
+                      { image: getImageUrl('artgallery', 'ex1'), text: '' },
+                      { image: getImageUrl('artgallery', 'ex2'), text: '' },
+                      { image: getImageUrl('artgallery', 'ex3'), text: '' },
+                      { image: getImageUrl('artgallery', 'ex4'), text: '' },
+                      { image: getImageUrl('artgallery', 'ex5'), text: '' },
+                      { image: getImageUrl('artgallery', 'ex6'), text: '' },
                     ]}
                   />
                 </React.Suspense>
@@ -604,15 +617,15 @@ const Page = () => {
                     autoScrollSpeed={-0.05}
                     imageGap={0.8}
                     items={[
-                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex7.png?alt=media&token=bc1a7a8f-ebe0-4fd6-9a75-3d0f07414e27', text: '' },
-                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex8.png?alt=media&token=68dad024-f582-4e6a-9b8a-92f70188252f', text: '' },
-                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex9.png?alt=media&token=fd980978-cbb2-4039-8b02-307d028635d5', text: '' },
-                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex10.png?alt=media&token=8cd9bec9-ad65-4807-8189-e60dcc4eb441', text: '' },
-                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex11.png?alt=media&token=85a8bb76-f450-4db8-9df3-6f4b4eb75166', text: '' },
-                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex12.png?alt=media&token=65c055c1-d812-40c5-b85e-7e50103f6672', text: '' },
-                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex13.png?alt=media&token=d8392b12-de19-471b-8902-d1a8e72d3b8f', text: '' },
-                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex14.png?alt=media&token=230af79c-da11-4eec-b143-b444aaa6c266', text: '' },
-                      { image: 'https://firebasestorage.googleapis.com/v0/b/wild-mind-ai.firebasestorage.app/o/vyom_static_landigpage%2Fartgallery%2Fex15.png?alt=media&token=64e4d18e-3bb0-471d-839b-656ce06ab0c0', text: '' },
+                      { image: getImageUrl('artgallery', 'ex7'), text: '' },
+                      { image: getImageUrl('artgallery', 'ex8'), text: '' },
+                      { image: getImageUrl('artgallery', 'ex9'), text: '' },
+                      { image: getImageUrl('artgallery', 'ex10'), text: '' },
+                      { image: getImageUrl('artgallery', 'ex11'), text: '' },
+                      { image: getImageUrl('artgallery', 'ex12'), text: '' },
+                      { image: getImageUrl('artgallery', 'ex13'), text: '' },
+                      { image: getImageUrl('artgallery', 'ex14'), text: '' },
+                      { image: getImageUrl('artgallery', 'ex15'), text: '' },
                     ]}
                   />
                 </React.Suspense>

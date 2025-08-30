@@ -20,7 +20,7 @@ const videoFeatures: FeatureItem[] = [
 export default function VideoGeneration() {
   return (
     <div className="space-y-4">
-      <h3 className="text-regular font-semibold text-white mb-3">
+      <h3 className="text-regular font-semibold text-white mb-3 md:text-sm">
         Video Generation
       </h3>
             <div className="space-y-3">

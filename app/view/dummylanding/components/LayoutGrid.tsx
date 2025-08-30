@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { cn } from "@/app/lib/utils";
 
 type Card = {
@@ -26,7 +26,7 @@ export const LayoutGrid = ({ cards }: { cards: Card[] }) => {
   };
 
   return (
-    <div className="w-full p-4 md:p-10 grid grid-cols-1 md:grid-cols-3 max-w-7xl mx-auto gap-4 relative">
+    <div className="w-full p-4 md:p-6 lg:p-8 grid grid-cols-1 md:grid-cols-3 max-w-7xl mx-auto gap-4 md:gap-3 lg:gap-4 relative">
       {cards.map((card, i) => (
         <div key={i} className={cn(card.className, "")}>
           <motion.div
@@ -38,7 +38,7 @@ export const LayoutGrid = ({ cards }: { cards: Card[] }) => {
                 ? "rounded-lg cursor-pointer absolute inset-0 h-1/2 w-full md:w-1/2 m-auto z-50 flex justify-center items-center flex-wrap flex-col"
                 : lastSelected?.id === card.id
                 ? "z-40 bg-white rounded-xl h-full w-full min-h-[16rem] md:min-h-[20rem]"
-                : "bg-white rounded-xl h-full w-full min-h-[16rem] md:min-h-[20rem]"
+                : "bg-white rounded-xl h-full w-full min-h-[16rem] md:min-h-[18rem] lg:min-h-[20rem]"
             )}
             layoutId={`card-${card.id}`}
           >
@@ -49,7 +49,7 @@ export const LayoutGrid = ({ cards }: { cards: Card[] }) => {
                 <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/70 via-black/30 to-transparent z-10" />
                 <div className="absolute bottom-0 left-0 right-0 p-4 z-20 pointer-events-none">
                   {card.title && (
-                    <div className="text-white text-2xl md:text-2xl lg:text-2xl font-semibold whitespace-nowrap overflow-hidden text-ellipsis">
+                    <div className="text-white text-2xl md:text-xl lg:text-2xl font-semibold whitespace-nowrap overflow-hidden text-ellipsis">
                       {card.title}
                     </div>
                   )}
@@ -116,7 +116,7 @@ const SelectedCard = ({ selected }: { selected: Card | null }) => {
           duration: 0.3,
           ease: "easeInOut",
         }}
-        className="relative px-8 pb-4 z-[70]"
+        className="relative px-8 md:px-6 lg:px-8 pb-4 md:pb-3 lg:pb-4 z-[70]"
       >
         {selected?.content}
       </motion.div>

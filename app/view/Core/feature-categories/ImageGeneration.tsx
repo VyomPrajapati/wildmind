@@ -19,7 +19,7 @@ const imageGenerationFeatures: FeatureItem[] = [
 export default function ImageGeneration() {
   return (
     <div className="space-y-4">
-      <h3 className="text-regular font-semibold text-white mb-3">
+      <h3 className="text-regular font-semibold text-white mb-3 md:text-sm">
         Image Generation
       </h3>
       <div className="space-y-3">
