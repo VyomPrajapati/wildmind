@@ -5,12 +5,13 @@ import React from 'react'
 // import InChatHistory from './view/inchatHistory/page';
 // Define Page as a React functional component
 // import HomePage from './view/HomePage/page';
-import DummyLanding from './view/dummylanding/page';
+import ComingSoonPage from './view/comingsoon/page';
+// import DummyLanding from './view/dummylanding/page';
 // import SignUp from './view/signup/page'; 
 const Page: React.FC = () => {  
   return (  
     <>
-      <DummyLanding />
+        <ComingSoonPage />
 
       {/* <SignUp /> */}
     {/* comment */}

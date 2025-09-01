@@ -8,7 +8,7 @@ interface FeatureItem {
 }
 
 const filmingFeatures: FeatureItem[] = [
-  { title: "AI story board", href: "/view/IMAGEGENERATIONNEW/newtexttoimage", icon: "📋" },
+  { title: "story board", href: "/view/IMAGEGENERATIONNEW/newtexttoimage", icon: "📋" },
   { title: "Film generation", href: "/view/IMAGEGENERATIONNEW/newtexttoimage", icon: "🎭" },
   { title: "Comic book generation", href: "/view/IMAGEGENERATIONNEW/newtexttoimage", icon: "📚" },
 ]
