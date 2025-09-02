@@ -497,9 +497,11 @@ const Page = () => {
             <WobbleCard containerClassName="col-span-1 md:col-span-1 min-h-[300px] md:min-h-[250px] lg:min-h-[280px] bg-[#288F1A] relative overflow-hidden">
               {/* Background Image */}
               <div className="absolute inset-0 z-0">
-                <img
+                <Image
                   src={getImageUrl('pricing', 'wizardsChess')}
                   alt="Background"
+                  width={512}
+                  height={288}
                   className="absolute bottom-0 right-0 w-96 md:w-[28rem] lg:w-[32rem] h-56 md:h-64 lg:h-72 object-contain opacity-80"
                 />
               </div>

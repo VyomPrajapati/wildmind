@@ -3,9 +3,8 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ChevronDown, ChevronUp, ChevronRight, Check } from 'lucide-react'
+import { ChevronRight, Check } from 'lucide-react'
 import { getImageUrl } from '@/routes/imageroute'
-import { FEATURE_ROUTES, NAV_ROUTES } from '@/routes/routes'
 import Prism from './compo/Prism'
 import TextPressure from './compo/TextPressure'
 import VariableProximity from './compo/VariableProximity'
@@ -185,7 +184,7 @@ const ComingSoonPage = () => {
         </header>
 
         {/* Main Content */}
-        <main className="flex-1 flex flex-col items-center justify-center px-6 py-12 text-center mb-32">
+        <main className="flex-1 flex flex-col items-center justify-center px-6 py-12 text-center">
               {/* Coming Soon Text */}
               <div style={{position: 'relative', height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '0'}}>
               <TextPressure
@@ -204,10 +203,10 @@ const ComingSoonPage = () => {
             </div>
 
           {/* Subtext */}
-                     <p className="text-xl md:text-xl font-medium italic text-gray-200 mb-20 max-w-4xl leading-relaxed -mt-36">
-             "Redefining and Unifying AI Powered Creative Tools for Everyone <br />
-             One Platform for Limitless Imagination and Effortless Execution"
-           </p>
+          <p className="text-xl md:text-xl font-medium italic text-gray-200 mb-20 max-w-4xl leading-relaxed -mt-36">
+            &ldquo;Redefining and Unifying AI Powered Creative Tools for Everyone <br />
+            One Platform for Limitless Imagination and Effortless Execution&rdquo;
+          </p>
 
           {/* Email Subscription */}
           {/* Heading Text */}
@@ -273,7 +272,7 @@ const ComingSoonPage = () => {
         </main>
 
         {/* Footer with Social Icons */}
-        <footer className="px-6 py-4 md:px-8 lg:px-12 -mt-12 -mr-10">
+        <footer className="px-6 py-4 md:px-8 lg:px-12">
           <div className="flex justify-end">
             <div className="flex -space-x-1">
               {socialLinks.map((social, index) => (

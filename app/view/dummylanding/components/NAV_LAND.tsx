@@ -6,7 +6,7 @@ import { User, X, ChevronDown, ChevronUp, LogOut } from "lucide-react"
 import { onAuthStateChanged, signOut } from "firebase/auth"
 import { auth, db } from "@/database/firebase"
 import { doc, getDoc } from "firebase/firestore"
-import { APP_ROUTES, NAV_ROUTES, FEATURE_ROUTES } from "../../../../routes/routes"
+import { NAV_ROUTES, FEATURE_ROUTES } from "../../../../routes/routes"
 import { getImageUrl } from "@/routes/imageroute"
 import ImageGeneration from "../../Core/feature-categories/ImageGeneration"
 import BrandingKit from "../../Core/feature-categories/BrandingKit"
@@ -22,8 +22,6 @@ import {
 const NAV_LAND = () => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [scrolled] = useState(false)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [userSlug, setUserSlug] = useState("")
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false)
   const [userEmail, setUserEmail] = useState<string>("")
@@ -51,15 +49,11 @@ const NAV_LAND = () => {
     // check auth state on mount
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       if (user) {
-        setIsLoggedIn(true)
         setUserEmail(user.email || "")
         const docRef = doc(db, "users", user.email || "")
         const docSnap = await getDoc(docRef)
         if (docSnap.exists()) {
-          const data = docSnap.data()
-          if (data?.slug) {
-            setUserSlug(data.slug) // get the unique slug
-          }
+          // slug data available but not used in this component
         }
 
         // Get username from localStorage if available
@@ -76,8 +70,6 @@ const NAV_LAND = () => {
             setUsername(storedUsername)
           }
         } else {
-          setIsLoggedIn(false)
-          setUserSlug("")
           setUserEmail("")
           setUsername("")
         }
@@ -124,8 +116,6 @@ const NAV_LAND = () => {
     
     setUserEmail("")
     setUsername("")
-    setIsLoggedIn(false)
-    setUserSlug("")
     setIsUserDropdownOpen(false)
     router.push("/")
   }
