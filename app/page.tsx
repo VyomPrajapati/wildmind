@@ -7,12 +7,15 @@ import React from 'react'
 // import HomePage from './view/HomePage/page';
 import ComingSoonPage from './view/comingsoon/page';
 // import DummyLanding from './view/dummylanding/page';
+// import HomePage from './view/HomePage/page';
 // import SignUp from './view/signup/page'; 
 const Page: React.FC = () => {  
   return (  
     <>
+        {/* <SignUp /> */}
         <ComingSoonPage />
-
+        {/* <DummyLanding /> */}
+        {/* <HomePage /> */}
       {/* <SignUp /> */}
     {/* comment */}
       {/* <InpaintFluxAPI/> */}

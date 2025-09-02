@@ -317,8 +317,8 @@ export default function SignInForm() {
   }, [otpSent])
 
   return (
-    <div className="w-full h-full flex flex-col p-12 bg-[#1E1E1E]  ">        
-    <div className="absolute inset-0 bg-gradient-to-l from-gray-900/90 via-transparent to-transparent "></div>
+    <div className="w-full h-full flex flex-col p-12 bg-[#1E1E1E] relative">        
+    <div className="absolute inset-0 bg-gradient-to-l from-gray-900/90 via-transparent to-transparent pointer-events-none"></div>
 
       {/* Header with WildMind Logo - Top Left */}
       <div className="flex items-center mb-6">

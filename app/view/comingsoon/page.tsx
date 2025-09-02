@@ -13,6 +13,9 @@ const ComingSoonPage = () => {
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null)
   const [email, setEmail] = useState<string>('')
   const [status, setStatus] = useState<'idle' | 'loading' | 'success'>('idle')
+  // Honeypot field (bots often fill every input). Must remain empty.
+  const [hp, setHp] = useState<string>('')
+  const [cooldownUntil, setCooldownUntil] = useState<number>(0)
   const dropdownRef = useRef<HTMLDivElement>(null)
   const emailContainerRef = useRef<HTMLDivElement>(null)
 
@@ -32,7 +35,7 @@ const ComingSoonPage = () => {
     setActiveDropdown(activeDropdown === dropdownName ? null : dropdownName)
   }
 
-  const isReady = email.trim().length > 0
+  const isReady = email.trim().length > 0 && hp.length === 0 && Date.now() >= cooldownUntil
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -40,9 +43,21 @@ const ComingSoonPage = () => {
 
     try {
       setStatus('loading')
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1200))
+      const res = await fetch('/api/comingsoon/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        // Send honeypot plus a client timestamp for basic telemetry
+        body: JSON.stringify({ email, hp, clientTs: Date.now() })
+      })
+      if (!res.ok) {
+        // Basic cool-down on failure to slow automated retries
+        setCooldownUntil(Date.now() + 5000)
+        throw new Error('Request failed')
+      }
       setStatus('success')
+      // Add a short cool-down after success to throttle bursts
+      const until = Date.now() + 8000
+      setCooldownUntil(until)
       setTimeout(() => setStatus('idle'), 2000)
     } catch {
       setStatus('idle')
@@ -249,6 +264,16 @@ const ComingSoonPage = () => {
                    required
                    className="flex-1 bg-transparent border-2 border-white/30 text-white rounded-full px-6 py-2 placeholder-gray-300 placeholder:text-base focus:outline-none focus:ring-0  focus:shadow-none transition-all duration-300"
                  />
+                 {/* Honeypot field (hidden from users) */}
+                 <input
+                   type="text"
+                   tabIndex={-1}
+                   autoComplete="off"
+                   value={hp}
+                   onChange={(e) => setHp(e.target.value)}
+                   className="hidden"
+                   aria-hidden="true"
+                 />
                 <button
                   type="submit"
                   disabled={!isReady || status === 'loading'}
@@ -259,7 +284,7 @@ const ComingSoonPage = () => {
                   `}
                 >
                   {status === 'loading' ? (
-                    <span className="inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    <span className="inline-block w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
                   ) : status === 'success' ? (
                     <Check className="w-5 h-5 text-green-400" />
                   ) : (

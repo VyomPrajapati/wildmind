@@ -29,11 +29,16 @@ const nextConfig = {
         hostname: 'api.wildmindai.com',
         pathname: '/images/**',
       },
-      {
-        protocol: 'https',
-        hostname: 'firebasestorage.googleapis.com',
-        pathname: '/**',
-      },
+             {
+         protocol: 'https',
+         hostname: 'firebasestorage.googleapis.com',
+         pathname: '/**',
+       },
+       {
+         protocol: 'https',
+         hostname: 'wild-mind-ai.firebasestorage.app',
+         pathname: '/**',
+       },
       {
         protocol: 'https',
         hostname: 'placehold.co',
@@ -106,9 +111,9 @@ const nextConfig = {
         pathname: '/core/**',  // or '/**' if you serve assets elsewhere
       },
     ],
-    // Exclude video files from image optimization
-    unoptimized: false,
-    formats: ['image/webp', 'image/avif'],
+         // Exclude video files from image optimization
+     unoptimized: true,
+     formats: ['image/webp', 'image/avif'],
   },
   // Add static file serving configuration
   async rewrites() {

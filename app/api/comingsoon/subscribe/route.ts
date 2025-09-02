@@ -1,0 +1,155 @@
+import { NextResponse } from 'next/server'
+import nodemailer from 'nodemailer'
+import fs from 'fs'
+import path from 'path'
+import dotenv from 'dotenv'
+// Ensure Node.js runtime so we can read environment and perform network IO reliably
+export const runtime = 'nodejs'
+// As a safety net (esp. in dev on Windows), explicitly load .env.local if Next.js
+// hasn't already populated process.env. This is a no-op if vars are present.
+try {
+  dotenv.config({ path: process.cwd() + '/.env.local' })
+} catch {}
+
+// Extra fallback: manually read .env.local if still missing at runtime
+function loadEnvFromFile() {
+  if ((process.env as any).__ENV_LOADED_MANUAL__) return
+  const guessPaths = [
+    path.join(process.cwd(), '.env.local'),
+    path.join(process.cwd(), '..', '.env.local'),
+    path.join(process.cwd(), 'wildmind', 'aryanresponsivearyan', '.env.local'),
+  ]
+  for (const p of guessPaths) {
+    try {
+      if (fs.existsSync(p)) {
+        const content = fs.readFileSync(p, 'utf8')
+        for (const line of content.split(/\r?\n/)) {
+          if (!line || line.trim().startsWith('#')) continue
+          const idx = line.indexOf('=')
+          if (idx === -1) continue
+          const key = line.slice(0, idx).trim()
+          const val = line.slice(idx + 1).trim()
+          if (!process.env[key]) process.env[key] = val
+        }
+        ;(process.env as any).__ENV_LOADED_MANUAL__ = '1'
+        break
+      }
+    } catch {}
+  }
+}
+loadEnvFromFile()
+
+// POST /api/comingsoon/subscribe
+export async function POST(request: Request) {
+  try {
+    const { email, hp } = await request.json()
+
+    // 0) Bot defenses
+    // Honeypot: if provided, assume bot
+    if (typeof hp === 'string' && hp.trim().length > 0) {
+      return NextResponse.json({ ok: true })
+    }
+    // Basic rate-limiting per IP (very light, in-memory best-effort for dev)
+    const ip = (request.headers.get('x-forwarded-for') || '').split(',')[0].trim() || 'local'
+    ;(global as any).__SUBMIT_WINDOW__ = (global as any).__SUBMIT_WINDOW__ || {}
+    const nowMs = Date.now()
+    const windowMs = 10_000
+    const maxPerWindow = 3
+    const bucket = (global as any).__SUBMIT_WINDOW__
+    bucket[ip] = (bucket[ip] || []).filter((t: number) => nowMs - t < windowMs)
+    if (bucket[ip].length >= maxPerWindow) {
+      return NextResponse.json({ error: 'RATE_LIMITED' }, { status: 429 })
+    }
+    bucket[ip].push(nowMs)
+
+    if (!email || typeof email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return NextResponse.json({ error: 'Invalid email' }, { status: 400 })
+    }
+
+    const smtpUser = (process.env.GMAIL_USER || '').trim()
+    const smtpPass = (process.env.GMAIL_APP_PASSWORD || '').trim()
+
+    if (!smtpUser || !smtpPass) {
+      return NextResponse.json({ error: 'Email credentials not configured' }, { status: 500 })
+    }
+
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: smtpUser,
+        pass: smtpPass,
+      },
+    })
+
+    // Quick diagnostics so we can see what's wrong locally
+    try {
+      await transporter.verify()
+    } catch (e: unknown) {
+      console.error('[Subscribe] SMTP verify failed:', e)
+      return NextResponse.json({ error: 'SMTP_VERIFY_FAILED' }, { status: 500 })
+    }
+
+    // Send email to the submitted address (from your company address)
+    await transporter.sendMail({
+      from: `WildMind AI <${smtpUser}>`,
+      to: email,
+      subject: 'You’re on the WildMind AI launch list 🎉',
+      html: `
+        <div style="font-family:Inter,Arial,sans-serif;line-height:1.7;color:#0b1220;background:#ffffff;padding:24px">
+          <h2 style="margin:0 0 12px">Thanks for subscribing!</h2>
+          <p style="margin:0 0 12px">
+            You’re now on the list to be notified the moment <strong>WildMind AI</strong> goes live.
+          </p>
+          <p style="margin:0 0 12px">
+            We’ll send you important updates, launch details, and feature highlights as we get closer.
+            No spam — just meaningful news about the product.
+          </p>
+          <p style="margin:0 0 20px">If you didn’t request this, you can safely ignore this email.</p>
+          <hr style="border:none;height:1px;background:#e5e7eb;margin:20px 0" />
+          <p style="margin:0;color:#6b7280">— Team WildMind</p>
+        </div>
+      `,
+    })
+
+    // Log signup without Google Cloud using Google Apps Script Web App (optional)
+    // If you set APPS_SCRIPT_WEBHOOK_URL to a deployed Apps Script Web App URL,
+    // we will POST { email, timestamp } to it. The script can append rows to a Google Sheet.
+    try {
+      const webhookRaw = process.env.APPS_SCRIPT_WEBHOOK_URL || ''
+      const webhook = webhookRaw.trim()
+      if (!webhook) {
+        console.error('[Subscribe] Missing APPS_SCRIPT_WEBHOOK_URL at runtime')
+      }
+      if (webhook) {
+        const now = new Date().toISOString()
+        const webhookRes = await fetch(webhook, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+          body: JSON.stringify({ email, timestamp: now, secret: process.env.APPS_SCRIPT_SECRET || '' })
+        })
+        const text = await webhookRes.text()
+        // Try to parse JSON if possible
+        let parsed: any = undefined
+        try { parsed = JSON.parse(text) } catch {}
+
+        if (!webhookRes.ok || (parsed && parsed.ok === false)) {
+          console.error('[Subscribe] Apps Script webhook non-OK:', webhookRes.status, text)
+          return NextResponse.json({ ok: false, error: 'WEBHOOK_FAILED', details: parsed || text }, { status: 502 })
+        }
+      }
+    } catch (e) {
+      console.error('[Subscribe] Apps Script webhook failed:', e)
+      return NextResponse.json({ ok: false, error: 'WEBHOOK_ERROR' }, { status: 502 })
+    }
+
+    return NextResponse.json({ ok: true })
+  } catch (err) {
+    console.error('[Subscribe] Unhandled error:', err)
+    return NextResponse.json({ error: 'INTERNAL_ERROR' }, { status: 500 })
+  }
+}
+
+
