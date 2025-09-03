@@ -39,15 +39,59 @@ function loadEnvFromFile() {
 }
 loadEnvFromFile()
 
+// OPTIONS method for CORS preflight requests
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    },
+  })
+}
+
+// GET method for testing if the endpoint is accessible
+export async function GET() {
+  console.log('[Subscribe] GET endpoint called - testing accessibility')
+  return NextResponse.json({ 
+    message: 'Subscribe endpoint is accessible',
+    timestamp: new Date().toISOString(),
+    env: {
+      gmailUser: process.env.GMAIL_USER ? 'SET' : 'NOT SET',
+      gmailPass: process.env.GMAIL_APP_PASSWORD ? 'SET' : 'NOT SET'
+    }
+  }, {
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+    }
+  })
+}
+
 // POST /api/comingsoon/subscribe
 export async function POST(request: Request) {
+  console.log('[Subscribe] API endpoint called')
+  console.log('[Subscribe] Environment variables check:')
+  console.log('[Subscribe] GMAIL_USER:', process.env.GMAIL_USER ? 'SET' : 'NOT SET')
+  console.log('[Subscribe] GMAIL_APP_PASSWORD:', process.env.GMAIL_APP_PASSWORD ? 'SET' : 'NOT SET')
+  console.log('[Subscribe] APPS_SCRIPT_WEBHOOK_URL:', process.env.APPS_SCRIPT_WEBHOOK_URL ? 'SET' : 'NOT SET')
+  
   try {
     const { email, hp } = await request.json()
+    console.log('[Subscribe] Request body received:', { email: email ? 'PROVIDED' : 'NOT PROVIDED', hp: hp ? 'PROVIDED' : 'NOT PROVIDED' })
 
     // 0) Bot defenses
     // Honeypot: if provided, assume bot
     if (typeof hp === 'string' && hp.trim().length > 0) {
-      return NextResponse.json({ ok: true })
+      return NextResponse.json({ ok: true }, {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        }
+      })
     }
     // Basic rate-limiting per IP (very light, in-memory best-effort for dev)
     const ip = (request.headers.get('x-forwarded-for') || '').split(',')[0].trim() || 'local'
@@ -58,19 +102,40 @@ export async function POST(request: Request) {
     const bucket = (global as any).__SUBMIT_WINDOW__
     bucket[ip] = (bucket[ip] || []).filter((t: number) => nowMs - t < windowMs)
     if (bucket[ip].length >= maxPerWindow) {
-      return NextResponse.json({ error: 'RATE_LIMITED' }, { status: 429 })
+      return NextResponse.json({ error: 'RATE_LIMITED' }, { 
+        status: 429,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        }
+      })
     }
     bucket[ip].push(nowMs)
 
     if (!email || typeof email !== 'string' || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return NextResponse.json({ error: 'Invalid email' }, { status: 400 })
+      return NextResponse.json({ error: 'Invalid email' }, { 
+        status: 400,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        }
+      })
     }
 
     const smtpUser = (process.env.GMAIL_USER || '').trim()
     const smtpPass = (process.env.GMAIL_APP_PASSWORD || '').trim()
 
     if (!smtpUser || !smtpPass) {
-      return NextResponse.json({ error: 'Email credentials not configured' }, { status: 500 })
+      return NextResponse.json({ error: 'Email credentials not configured' }, { 
+        status: 500,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        }
+      })
     }
 
     const transporter = nodemailer.createTransport({
@@ -86,7 +151,14 @@ export async function POST(request: Request) {
       await transporter.verify()
     } catch (e: unknown) {
       console.error('[Subscribe] SMTP verify failed:', e)
-      return NextResponse.json({ error: 'SMTP_VERIFY_FAILED' }, { status: 500 })
+      return NextResponse.json({ error: 'SMTP_VERIFY_FAILED' }, { 
+        status: 500,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        }
+      })
     }
 
     // Send email to the submitted address (from your company address)
@@ -137,18 +209,45 @@ export async function POST(request: Request) {
 
         if (!webhookRes.ok || (parsed && parsed.ok === false)) {
           console.error('[Subscribe] Apps Script webhook non-OK:', webhookRes.status, text)
-          return NextResponse.json({ ok: false, error: 'WEBHOOK_FAILED', details: parsed || text }, { status: 502 })
+          return NextResponse.json({ ok: false, error: 'WEBHOOK_FAILED', details: parsed || text }, { 
+            status: 502,
+            headers: {
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+              'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+            }
+          })
         }
       }
     } catch (e) {
       console.error('[Subscribe] Apps Script webhook failed:', e)
-      return NextResponse.json({ ok: false, error: 'WEBHOOK_ERROR' }, { status: 502 })
+      return NextResponse.json({ ok: false, error: 'WEBHOOK_ERROR' }, { 
+        status: 502,
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+        }
+      })
     }
 
-    return NextResponse.json({ ok: true })
+    return NextResponse.json({ ok: true }, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      }
+    })
   } catch (err) {
     console.error('[Subscribe] Unhandled error:', err)
-    return NextResponse.json({ error: 'INTERNAL_ERROR' }, { status: 500 })
+    return NextResponse.json({ error: 'INTERNAL_ERROR' }, { 
+      status: 500,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+      }
+    })
   }
 }
 

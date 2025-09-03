@@ -43,23 +43,33 @@ const ComingSoonPage = () => {
 
     try {
       setStatus('loading')
+      console.log('[Frontend] Making API call to /api/comingsoon/subscribe')
       const res = await fetch('/api/comingsoon/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         // Send honeypot plus a client timestamp for basic telemetry
         body: JSON.stringify({ email, hp, clientTs: Date.now() })
       })
+      console.log('[Frontend] API response status:', res.status)
+      console.log('[Frontend] API response ok:', res.ok)
+      
       if (!res.ok) {
+        const errorText = await res.text()
+        console.log('[Frontend] API error response:', errorText)
         // Basic cool-down on failure to slow automated retries
         setCooldownUntil(Date.now() + 5000)
         throw new Error('Request failed')
       }
+      
+      const responseData = await res.json()
+      console.log('[Frontend] API success response:', responseData)
       setStatus('success')
       // Add a short cool-down after success to throttle bursts
       const until = Date.now() + 8000
       setCooldownUntil(until)
       setTimeout(() => setStatus('idle'), 2000)
-    } catch {
+    } catch (error) {
+      console.log('[Frontend] API call error:', error)
       setStatus('idle')
     }
   }
