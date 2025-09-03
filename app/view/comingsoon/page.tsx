@@ -18,6 +18,7 @@ const ComingSoonPage = () => {
   const [cooldownUntil, setCooldownUntil] = useState<number>(0)
   const dropdownRef = useRef<HTMLDivElement>(null)
   const emailContainerRef = useRef<HTMLDivElement>(null)
+  const isDebug = process.env.NODE_ENV !== 'production'
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -43,27 +44,27 @@ const ComingSoonPage = () => {
 
     try {
       setStatus('loading')
-      console.log('[Frontend] Making API call to /api/comingsoon/subscribe')
+      if (isDebug) console.log('[Frontend] Making API call to /api/comingsoon/subscribe')
       const res = await fetch('/api/comingsoon/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         // Send honeypot plus a client timestamp for basic telemetry
         body: JSON.stringify({ email, hp, clientTs: Date.now() })
       })
-      console.log('[Frontend] API response status:', res.status)
-      console.log('[Frontend] API response ok:', res.ok)
+      if (isDebug) console.log('[Frontend] API response status:', res.status)
+      if (isDebug) console.log('[Frontend] API response ok:', res.ok)
       
       if (!res.ok) {
         const errorText = await res.text()
-        console.log('[Frontend] API error response:', errorText)
+        if (isDebug) console.log('[Frontend] API error response:', errorText)
         // Basic cool-down on failure to slow automated retries
         setCooldownUntil(Date.now() + 5000)
         throw new Error('Request failed')
       }
       
       const responseData = await res.json()
-      console.log('[Frontend] API success response:', responseData)
-      console.log('[Frontend] Webhook status:', responseData.webhookStatus)
+      if (isDebug) console.log('[Frontend] API success response:', responseData)
+      if (isDebug) console.log('[Frontend] Webhook status:', responseData.webhookStatus)
       setStatus('success')
       setEmail('') // Clear the email field
       // Add a short cool-down after success to throttle bursts
@@ -71,7 +72,7 @@ const ComingSoonPage = () => {
       setCooldownUntil(until)
       setTimeout(() => setStatus('idle'), 5000) // Show success message for 5 seconds
     } catch (error) {
-      console.log('[Frontend] API call error:', error)
+      if (isDebug) console.log('[Frontend] API call error:', error)
       setStatus('idle')
     }
   }
