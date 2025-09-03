@@ -132,29 +132,42 @@ export async function POST(request: Request) {
     try {
       const webhookRaw = process.env.APPS_SCRIPT_WEBHOOK_URL || ''
       const webhook = webhookRaw.trim()
+      console.log('[Subscribe] Webhook URL check:', webhook ? 'SET' : 'NOT SET')
       if (!webhook) {
         console.error('[Subscribe] Missing APPS_SCRIPT_WEBHOOK_URL at runtime')
       }
       if (webhook) {
+        console.log('[Subscribe] Attempting to call webhook:', webhook)
         const now = new Date().toISOString()
+        const webhookData = { email, timestamp: now, secret: process.env.APPS_SCRIPT_SECRET || '' }
+        console.log('[Subscribe] Webhook data being sent:', { email, timestamp: now, secret: process.env.APPS_SCRIPT_SECRET ? 'SET' : 'NOT SET' })
+        
         const webhookRes = await fetch(webhook, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
           },
-          body: JSON.stringify({ email, timestamp: now, secret: process.env.APPS_SCRIPT_SECRET || '' })
+          body: JSON.stringify(webhookData)
         })
+        console.log('[Subscribe] Webhook response status:', webhookRes.status)
+        console.log('[Subscribe] Webhook response ok:', webhookRes.ok)
+        
         const text = await webhookRes.text()
+        console.log('[Subscribe] Webhook response text:', text)
+        
         // Try to parse JSON if possible
         let parsed: any = undefined
         try { parsed = JSON.parse(text) } catch {}
+        console.log('[Subscribe] Webhook parsed response:', parsed)
 
         if (!webhookRes.ok || (parsed && parsed.ok === false)) {
           console.error('[Subscribe] Apps Script webhook non-OK:', webhookRes.status, text)
           // Don't fail the entire request if webhook fails - just log it
           console.error('[Subscribe] Webhook failed but continuing - user will still see success')
           // Continue with success response even if webhook fails
+        } else {
+          console.log('[Subscribe] Webhook call successful!')
         }
       }
     } catch (e) {
