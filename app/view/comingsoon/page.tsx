@@ -63,6 +63,7 @@ const ComingSoonPage = () => {
       
       const responseData = await res.json()
       console.log('[Frontend] API success response:', responseData)
+      console.log('[Frontend] Webhook status:', responseData.webhookStatus)
       setStatus('success')
       setEmail('') // Clear the email field
       // Add a short cool-down after success to throttle bursts

@@ -129,12 +129,14 @@ export async function POST(request: Request) {
     // Log signup without Google Cloud using Google Apps Script Web App (optional)
     // If you set APPS_SCRIPT_WEBHOOK_URL to a deployed Apps Script Web App URL,
     // we will POST { email, timestamp } to it. The script can append rows to a Google Sheet.
+    let webhookStatus = 'not_called'
     try {
       const webhookRaw = process.env.APPS_SCRIPT_WEBHOOK_URL || ''
       const webhook = webhookRaw.trim()
       console.log('[Subscribe] Webhook URL check:', webhook ? 'SET' : 'NOT SET')
       if (!webhook) {
         console.error('[Subscribe] Missing APPS_SCRIPT_WEBHOOK_URL at runtime')
+        webhookStatus = 'no_url'
       }
       if (webhook) {
         console.log('[Subscribe] Attempting to call webhook:', webhook)
@@ -163,21 +165,24 @@ export async function POST(request: Request) {
 
         if (!webhookRes.ok || (parsed && parsed.ok === false)) {
           console.error('[Subscribe] Apps Script webhook non-OK:', webhookRes.status, text)
+          webhookStatus = 'failed'
           // Don't fail the entire request if webhook fails - just log it
           console.error('[Subscribe] Webhook failed but continuing - user will still see success')
           // Continue with success response even if webhook fails
         } else {
           console.log('[Subscribe] Webhook call successful!')
+          webhookStatus = 'success'
         }
       }
     } catch (e) {
       console.error('[Subscribe] Apps Script webhook failed:', e)
+      webhookStatus = 'error'
       // Don't fail the entire request if webhook fails - just log it
       console.error('[Subscribe] Webhook error but continuing - user will still see success')
       // Continue with success response even if webhook fails
     }
 
-    return NextResponse.json({ ok: true }, {
+    return NextResponse.json({ ok: true, webhookStatus }, {
       headers: {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
