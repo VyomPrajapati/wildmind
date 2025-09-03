@@ -64,10 +64,11 @@ const ComingSoonPage = () => {
       const responseData = await res.json()
       console.log('[Frontend] API success response:', responseData)
       setStatus('success')
+      setEmail('') // Clear the email field
       // Add a short cool-down after success to throttle bursts
       const until = Date.now() + 8000
       setCooldownUntil(until)
-      setTimeout(() => setStatus('idle'), 2000)
+      setTimeout(() => setStatus('idle'), 5000) // Show success message for 5 seconds
     } catch (error) {
       console.log('[Frontend] API call error:', error)
       setStatus('idle')
@@ -264,6 +265,16 @@ const ComingSoonPage = () => {
 
           {/* Email Subscription Form */}
           <div className="w-[500px] max-w-2xl mx-auto mt-10">
+            {/* Success Message */}
+            {status === 'success' && (
+              <div className="mb-6 p-4 bg-green-500/10 border border-green-500/30 rounded-lg text-center">
+                <div className="flex items-center justify-center gap-2 text-green-400">
+                  <Check className="w-5 h-5" />
+                  <span className="font-medium">Thank you! Your email has been successfully submitted. We'll keep you updated!</span>
+                </div>
+              </div>
+            )}
+            
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="flex items-center gap-3 w-full">
                   <input
@@ -294,9 +305,15 @@ const ComingSoonPage = () => {
                   `}
                 >
                   {status === 'loading' ? (
-                    <span className="inline-block w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                    <span className="flex items-center gap-2">
+                      <span className="inline-block w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                      Submitting...
+                    </span>
                   ) : status === 'success' ? (
-                    <Check className="w-5 h-5 text-green-400" />
+                    <span className="flex items-center gap-2">
+                      <Check className="w-5 h-5 text-green-600" />
+                      Submitted!
+                    </span>
                   ) : (
                     'Submit'
                   )}

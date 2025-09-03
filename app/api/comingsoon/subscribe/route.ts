@@ -127,6 +127,8 @@ export async function POST(request: Request) {
     const smtpUser = (process.env.GMAIL_USER || '').trim()
     const smtpPass = (process.env.GMAIL_APP_PASSWORD || '').trim()
 
+    // Commented out email sending functionality - keeping for future use
+    /*
     if (!smtpUser || !smtpPass) {
       return NextResponse.json({ error: 'Email credentials not configured' }, { 
         status: 500,
@@ -165,23 +167,24 @@ export async function POST(request: Request) {
     await transporter.sendMail({
       from: `WildMind AI <${smtpUser}>`,
       to: email,
-      subject: 'You’re on the WildMind AI launch list 🎉',
+      subject: 'You\'re on the WildMind AI launch list 🎉',
       html: `
         <div style="font-family:Inter,Arial,sans-serif;line-height:1.7;color:#0b1220;background:#ffffff;padding:24px">
           <h2 style="margin:0 0 12px">Thanks for subscribing!</h2>
           <p style="margin:0 0 12px">
-            You’re now on the list to be notified the moment <strong>WildMind AI</strong> goes live.
+            You\'re now on the list to be notified the moment <strong>WildMind AI</strong> goes live.
           </p>
           <p style="margin:0 0 12px">
-            We’ll send you important updates, launch details, and feature highlights as we get closer.
+            We\'ll send you important updates, launch details, and feature highlights as we get closer.
             No spam — just meaningful news about the product.
           </p>
-          <p style="margin:0 0 20px">If you didn’t request this, you can safely ignore this email.</p>
+          <p style="margin:0 0 20px">If you didn\'t request this, you can safely ignore this email.</p>
           <hr style="border:none;height:1px;background:#e5e7eb;margin:20px 0" />
           <p style="margin:0;color:#6b7280">— Team WildMind</p>
         </div>
       `,
     })
+    */
 
     // Log signup without Google Cloud using Google Apps Script Web App (optional)
     // If you set APPS_SCRIPT_WEBHOOK_URL to a deployed Apps Script Web App URL,
