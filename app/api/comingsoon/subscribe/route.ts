@@ -168,7 +168,36 @@ export async function POST(request: Request) {
           webhookStatus = 'failed'
           // Don't fail the entire request if webhook fails - just log it
           console.error('[Subscribe] Webhook failed but continuing - user will still see success')
-          // Continue with success response even if webhook fails
+          // Fallback: try GET with query params (some Apps Scripts only implement doGet)
+          try {
+            const getUrl = new URL(webhook)
+            getUrl.searchParams.set('email', email)
+            getUrl.searchParams.set('timestamp', now)
+            if (process.env.APPS_SCRIPT_SECRET) {
+              getUrl.searchParams.set('secret', process.env.APPS_SCRIPT_SECRET)
+            }
+            console.log('[Subscribe] Trying GET fallback to webhook:', getUrl.toString())
+            const getRes = await fetch(getUrl.toString(), {
+              method: 'GET',
+              headers: { 'Accept': 'application/json' }
+            })
+            const getText = await getRes.text()
+            console.log('[Subscribe] GET fallback response status:', getRes.status)
+            console.log('[Subscribe] GET fallback response ok:', getRes.ok)
+            console.log('[Subscribe] GET fallback response text:', getText)
+            let getParsed: any = undefined
+            try { getParsed = JSON.parse(getText) } catch {}
+            console.log('[Subscribe] GET fallback parsed response:', getParsed)
+            if (getRes.ok && (!getParsed || getParsed.ok !== false)) {
+              console.log('[Subscribe] GET fallback successful!')
+              webhookStatus = 'success_via_get'
+            } else {
+              console.error('[Subscribe] GET fallback non-OK')
+            }
+          } catch (fallbackErr) {
+            console.error('[Subscribe] GET fallback threw error:', fallbackErr)
+          }
+          // Continue with success response even if webhook ultimately fails
         } else {
           console.log('[Subscribe] Webhook call successful!')
           webhookStatus = 'success'
