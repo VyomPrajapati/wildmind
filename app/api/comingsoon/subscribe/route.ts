@@ -152,26 +152,16 @@ export async function POST(request: Request) {
 
         if (!webhookRes.ok || (parsed && parsed.ok === false)) {
           console.error('[Subscribe] Apps Script webhook non-OK:', webhookRes.status, text)
-          return NextResponse.json({ ok: false, error: 'WEBHOOK_FAILED', details: parsed || text }, { 
-            status: 502,
-            headers: {
-              'Access-Control-Allow-Origin': '*',
-              'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-              'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-            }
-          })
+          // Don't fail the entire request if webhook fails - just log it
+          console.error('[Subscribe] Webhook failed but continuing - user will still see success')
+          // Continue with success response even if webhook fails
         }
       }
     } catch (e) {
       console.error('[Subscribe] Apps Script webhook failed:', e)
-      return NextResponse.json({ ok: false, error: 'WEBHOOK_ERROR' }, { 
-        status: 502,
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-        }
-      })
+      // Don't fail the entire request if webhook fails - just log it
+      console.error('[Subscribe] Webhook error but continuing - user will still see success')
+      // Continue with success response even if webhook fails
     }
 
     return NextResponse.json({ ok: true }, {
