@@ -20,6 +20,92 @@ const ComingSoonPage = () => {
   const emailContainerRef = useRef<HTMLDivElement>(null)
   const isDebug = process.env.NODE_ENV !== 'production'
 
+  // Disable inspect/developer tools (only in production)
+  useEffect(() => {
+    // Only apply protection in production
+    const isProduction = process.env.NODE_ENV === 'production'
+    
+    if (!isProduction) {
+      // Development mode - allow inspection
+      console.log('🔧 Development mode - Inspector tools enabled')
+      return
+    }
+
+    // Production mode - disable inspection
+    console.log('🛡️ Production mode - Inspector protection active')
+
+    // Disable right-click context menu
+    const handleContextMenu = (e: MouseEvent) => {
+      e.preventDefault()
+      return false
+    }
+
+    // Disable F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U
+    const handleKeyDown = (e: KeyboardEvent) => {
+      // F12
+      if (e.key === 'F12') {
+        e.preventDefault()
+        return false
+      }
+      
+      // Ctrl+Shift+I (Inspect Element)
+      if (e.ctrlKey && e.shiftKey && e.key === 'I') {
+        e.preventDefault()
+        return false
+      }
+      
+      // Ctrl+Shift+J (Console)
+      if (e.ctrlKey && e.shiftKey && e.key === 'J') {
+        e.preventDefault()
+        return false
+      }
+      
+      // Ctrl+U (View Source)
+      if (e.ctrlKey && e.key === 'u') {
+        e.preventDefault()
+        return false
+      }
+      
+      // Ctrl+Shift+C (Inspect Element)
+      if (e.ctrlKey && e.shiftKey && e.key === 'C') {
+        e.preventDefault()
+        return false
+      }
+    }
+
+    // Disable text selection
+    const handleSelectStart = (e: Event) => {
+      e.preventDefault()
+      return false
+    }
+
+    // Disable drag
+    const handleDragStart = (e: DragEvent) => {
+      e.preventDefault()
+      return false
+    }
+
+    // Add event listeners
+    document.addEventListener('contextmenu', handleContextMenu)
+    document.addEventListener('keydown', handleKeyDown)
+    document.addEventListener('selectstart', handleSelectStart)
+    document.addEventListener('dragstart', handleDragStart)
+
+    // Console warning message
+    console.clear()
+    console.log('%c⚠️ WARNING ⚠️', 'color: red; font-size: 20px; font-weight: bold;')
+    console.log('%cThis is a browser feature intended for developers. If someone told you to copy-paste something here, it is a scam and will give them access to your account.', 'color: red; font-size: 14px;')
+    console.log('%cStop! This is a browser feature intended for developers.', 'color: red; font-size: 16px; font-weight: bold;')
+
+    // Cleanup
+    return () => {
+      document.removeEventListener('contextmenu', handleContextMenu)
+      document.removeEventListener('keydown', handleKeyDown)
+      document.removeEventListener('selectstart', handleSelectStart)
+      document.removeEventListener('dragstart', handleDragStart)
+    }
+  }, [])
+
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -147,8 +233,22 @@ const ComingSoonPage = () => {
     },
   ]
 
+  // Conditional styles based on environment
+  const isProduction = process.env.NODE_ENV === 'production'
+  const protectionStyles = isProduction ? {
+    userSelect: 'none' as const,
+    WebkitUserSelect: 'none' as const,
+    MozUserSelect: 'none' as const,
+    msUserSelect: 'none' as const,
+    WebkitTouchCallout: 'none' as const,
+    WebkitTapHighlightColor: 'transparent' as const
+  } : {}
+
   return (
-    <div className="min-h-screen relative overflow-hidden bg-[#0a1116]">
+    <div 
+      className="min-h-screen relative overflow-hidden bg-[#0a1116]"
+      style={protectionStyles}
+    >
              {/* Prism Background */}
        <div className="absolute inset-0 z-0">
                    <Prism {...prismProps} />

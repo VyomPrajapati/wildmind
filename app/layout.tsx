@@ -15,6 +15,14 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Wild Mind",
   description: "WildMind by WildChild Studios",
+  // Only add cache prevention in production
+  ...(process.env.NODE_ENV === 'production' && {
+    other: {
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Pragma': 'no-cache',
+      'Expires': '0'
+    }
+  })
 };
 
 export default function RootLayout({
